@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="MainTable">
-        <table>
+        <table border = "1">
             <tr>
                 <th>test</th>
             </tr>
