@@ -10,13 +10,13 @@
 </head>
 
 <body>
-    <div class="MainTable">
-        <table>
+    <table>
+        <div class="MainTable">
             <tr>
                 <td>test1</td>
                 <td>test2</td>
             </tr>
-        </table>
-    </div>
+        </div>     
+    </table>
 </body>
 </html>
