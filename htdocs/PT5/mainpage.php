@@ -12,10 +12,11 @@
 <body>
     <table>
         <tr>
-            <td>test1</td>
+            <td>First Name:</td>
+            <td><input type="text" name="firstname" placeholder="Enter your first name"></td>
         </tr>
         <tr>
-            <td>test2</td>
+            <td>Last Name</td>
         </tr>  
     </table>
 </body>
