@@ -13,7 +13,8 @@
     <div class="MainTable">
         <table>
             <tr>
-                <th>test</th>
+                <td>test1</td>
+                <td>test2</td>
             </tr>
         </table>
     </div>
