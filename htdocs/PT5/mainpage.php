@@ -11,12 +11,10 @@
 
 <body>
     <table>
-        <div class="MainTable">
-            <tr>
-                <td>test1</td>
-                <td>test2</td>
-            </tr>
-        </div>     
+        <tr>
+            <td>test1</td>
+            <td>test2</td>
+        </t>  
     </table>
 </body>
 </html>
