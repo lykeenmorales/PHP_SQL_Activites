@@ -13,8 +13,10 @@
     <table>
         <tr>
             <td>test1</td>
+        </tr>
+        <tr>
             <td>test2</td>
-        </t>  
+        </tr>  
     </table>
 </body>
 </html>
