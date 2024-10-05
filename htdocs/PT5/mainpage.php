@@ -6,10 +6,12 @@
     <title>Document</title>
 </head>
 <body>
-    <table>
-        <tr>
-            <th>test</th>
-        </tr>
-    </table>
+    <div class="Table">
+        <table>
+            <tr>
+                <th>test</th>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
