@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="Table">
+    <div class="MainTable">
         <table>
             <tr>
                 <th>test</th>
