@@ -9,14 +9,6 @@
 
 </head>
 
-<?php
-    include '../GetData.php';
-
-    $QueryResult = getDataTable("GetProductInformation");
-
-    while ($row = mysqli_fetch_array($QueryResult)){
-?>
-
 <body>
     <h2>Product Information</h2>
     <table>
@@ -26,7 +18,13 @@
             <th> Phone Number</th>
             <th> Address </th>
         </tr>
+        <?php
+            include '../GetData.php';
 
+            $QueryResult = getDataTable("GetProductInformation");
+
+            while ($row = mysqli_fetch_array($QueryResult)){
+        ?>
         <tr>
             <td><?php echo($row['first_name']) ?></td>
             <td><?php echo($row['last_name']) ?></td>
