@@ -26,7 +26,7 @@
             while ($row = mysqli_fetch_array($QueryResult)){
         ?>
         <tr>
-            <td><?php echo($row); ?></td>
+            <td><?php echo $row['first_name']; ?></td>
        
         </tr>
 
