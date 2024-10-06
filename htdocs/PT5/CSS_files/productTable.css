@@ -6,15 +6,3 @@ table, td, th {
 
     border: 0px solid #000;
 }
-
-.DescriptionSize {
-    width: 100%;
-}
-
-.PriceColumn {
-    width: 75%
-}
-
-.NameColumn {
-    width: 50%
-}
