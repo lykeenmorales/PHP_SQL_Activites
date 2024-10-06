@@ -1,4 +1,4 @@
-table {
+table, td, th {
     border-collapse: collapse;
     width: 50%;
     background-color: white;
