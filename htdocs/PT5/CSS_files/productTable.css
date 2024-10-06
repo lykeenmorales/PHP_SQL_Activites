@@ -7,6 +7,6 @@ table, td, th {
     border: 1px solid #000;
 }
 
-.Description {
-    padding-left: 75px !important;
+#DescriptionColumn {
+    padding-left: 75px;
 }
