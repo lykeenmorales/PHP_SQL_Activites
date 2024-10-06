@@ -19,7 +19,7 @@
             <th> Address </th>
         </tr>
         <?php
-            include 'connection.php';
+            include '../connection.php';
             include '../GetData.php';
 
             $QueryResult = getDataTable("GetProductInformation");
