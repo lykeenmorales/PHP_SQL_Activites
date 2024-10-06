@@ -9,25 +9,28 @@
 
 </head>
 
+<?php
+    include '../connection.php';
+
+    $QUERY = "SELECT * From products";
+    $QUERYRESULT = mysqli_query($connection, $QUERY);
+?>
+
 <body>
     <h2>Product Information</h2>
     <table>
         <tr>
-            <th> First Name </th>
-            <th> Last Name </th>
-            <th> Phone Number</th>
-            <th> Address </th>
+            <th> Product </th>
+            <th> Price </th>
+            <th> Description</th>
         </tr>
         <?php
-            include '../GetData.php';
-
-            $QueryResult = getDataTable(Callback: "GetProductInformation");
-
-            while ($row = mysqli_fetch_array($QueryResult)){
+            while ($Row = mysqli_fetch_assoc($QUERYRESULT)){
         ?>
         <tr>
-            <td><?php echo $row['first_name']; ?></td>
-       
+           <?php echo $Row['Name'] ; ?>
+           <?php echo $Row['Price'] ; ?>
+           <?php echo $Row['Description'] ; ?>
         </tr>
 
         <?php
