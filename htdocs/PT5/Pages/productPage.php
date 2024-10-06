@@ -30,7 +30,7 @@
         <tr>
            <td> <?php echo $Row['Name'];?> </td>
            <td> <?php echo $Row['Price'];?> </td>
-           <td> <?php echo $Row['Description'];?> </td>
+           <td id="DescriptionSize"> <?php echo $Row['Description'];?> </td>
         </tr>
 
         <?php
