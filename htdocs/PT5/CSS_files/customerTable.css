@@ -1,0 +1,29 @@
+table, td, th {
+    border-collapse: collapse;
+    background-color: white;
+
+    text-align: center;
+
+    border: 1px solid #000;
+}
+
+.NameColumn {
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#PhoneColumn {
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#AddressColumn {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
