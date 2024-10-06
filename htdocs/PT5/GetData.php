@@ -12,7 +12,7 @@
         }
 
         if ($Callback == "GetProductInformation"){
-            $QUERY = "SELECT * From products";
+            $QUERY = "SELECT * From 'products'";
             $QUERYRESULT = mysqli_query($connection, $QUERY);
 
             // Check if Result Variable is Valid/ Not Empty
