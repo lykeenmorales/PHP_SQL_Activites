@@ -26,10 +26,8 @@
             while ($row = mysqli_fetch_array($QueryResult)){
         ?>
         <tr>
-            <td><?php echo($row['first_name']); ?></td>
-            <td><?php echo($row['last_name']); ?></td>
-            <td><?php echo($row['Phone']); ?></td>
-            <td><?php echo($row['Address']); ?></td>
+            <td><?php echo($row); ?></td>
+       
         </tr>
 
         <?php
