@@ -3,7 +3,7 @@ table, td, th {
     width: 50%;
     background-color: white;
 
-    border: 1px solid #000;
+    border: 0px solid #000;
 }
 
 .DescriptionSize {
