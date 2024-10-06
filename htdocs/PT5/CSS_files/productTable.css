@@ -5,8 +5,8 @@ table, td, th {
     text-align: center;
 
     border: 1px solid #000;
+}
 
-    width: 50%;
-
-    padding-left: 25%;
+.Description {
+    padding-left: 25px !important;
 }
