@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="../mainDesign.css">
+    <link rel="stylesheet" href="../CSS_files/mainDesign.css">
 
 </head>
 
