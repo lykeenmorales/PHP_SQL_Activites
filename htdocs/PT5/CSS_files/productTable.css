@@ -4,7 +4,7 @@ table, td, th {
     height: 50%;
     background-color: white;
 
-    align-content: center;
+    text-align: center;
 
     border: 0px solid #000;
 }
