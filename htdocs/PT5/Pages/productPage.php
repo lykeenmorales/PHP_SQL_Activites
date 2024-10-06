@@ -19,10 +19,9 @@
             <th> Address </th>
         </tr>
         <?php
-            include '../connection.php';
             include '../GetData.php';
 
-            $QueryResult = getDataTable("GetProductInformation");
+            $QueryResult = getDataTable(Callback: "GetProductInformation");
 
             while ($row = mysqli_fetch_array($QueryResult)){
         ?>
