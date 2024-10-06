@@ -33,8 +33,7 @@
             <td><?php echo($row["Phone"]) ?></td>
             <td><?php echo($row["Address"]) ?></td>
         </tr>
-
-        // End Bracket loop
+        
         <?php
             }
         ?>
