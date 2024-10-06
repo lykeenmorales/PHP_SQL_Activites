@@ -30,7 +30,7 @@
         ?>
         <tr>
             <td class="NameColumn"> <?php echo $Row['first_name'];?> </td>
-            <td class="NameColumn"> <?php echo $Row['last_name'];?> </td>
+            <td class="NameColumna"> <?php echo $Row['last_name'];?> </td>
             <td id="PhoneColumn"> <?php echo $Row['Phone'];?> </td>
             <td id="AddressColumn"> <?php echo $Row['Address'];?> </td>
         </tr>
