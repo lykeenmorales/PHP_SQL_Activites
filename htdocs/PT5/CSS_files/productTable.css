@@ -4,6 +4,8 @@ table, td, th {
     height: 50%;
     background-color: white;
 
+    align-items: center;
+
     border: 0px solid #000;
 }
 
