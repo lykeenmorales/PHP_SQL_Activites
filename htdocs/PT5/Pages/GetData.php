@@ -30,5 +30,3 @@
             return "Cant find" . $Callback;
         }
     }
-    
-?>
