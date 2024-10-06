@@ -8,5 +8,13 @@ table, td, th {
 }
 
 .DescriptionSize {
-    width: 75%;
+    width: 50%;
+}
+
+.PriceColumn {
+    width: 50%
+}
+
+.NameColumn {
+    width: 50%
 }
