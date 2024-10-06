@@ -1,7 +1,5 @@
 table, td, th {
     border-collapse: collapse;
-    width: 50%;
-    height: 25%;
     background-color: white;
 
     text-align: center;
@@ -9,10 +7,6 @@ table, td, th {
     border: 0px solid #000;
 }
 
-#special-container .DescriptionSize {
-    width: 50%;
-    height: 25%;
-    background-color: white;
-    text-align: center;
-    border: 0px solid #000;
+.DescriptionSize {
+    width: 75%;
 }
