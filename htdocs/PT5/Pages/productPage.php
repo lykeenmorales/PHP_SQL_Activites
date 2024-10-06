@@ -28,9 +28,9 @@
             while ($Row = mysqli_fetch_assoc($QUERYRESULT)){
         ?>
         <tr>
-           <?php echo $Row['Name'] ; ?>
-           <?php echo $Row['Price'] ; ?>
-           <?php echo $Row['Description'] ; ?>
+           <td> <?php echo $Row['Name'];?> </td>
+           <td> <?php echo $Row['Price'];?> </td>
+           <td> <?php echo $Row['Description'];?> </td>
         </tr>
 
         <?php

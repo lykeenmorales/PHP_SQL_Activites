@@ -29,10 +29,10 @@
             while ($Row = mysqli_fetch_assoc($QUERYRESULT)){
         ?>
         <tr>
-           <?php echo $Row['first_name'] ; ?>
-           <?php echo $Row['last_name'] ; ?>
-           <?php echo $Row['Phone'] ; ?>
-           <?php echo $Row['Address'] ; ?>
+            <td> <?php echo $Row['first_name'];?> </td>
+            <td> ?php echo $Row['last_name'];?> </td>
+            <td> <?php echo $Row['Phone'];?> </td>
+            <td> <?php echo $Row['Address'];?> </td>
         </tr>
 
         <?php
