@@ -6,7 +6,7 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="../CSS_files/mainDesign.css">
-
+    <link rel="stylesheet" href="../CSS_files/customerTable.css">
 </head>
 
 <?php
