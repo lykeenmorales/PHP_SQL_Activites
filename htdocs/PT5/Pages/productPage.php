@@ -22,9 +22,9 @@
 
 <body>
     <div id = "Header">
-        <a class="headerText" href="../MainPage.php"> Back to Home </a>
+        <a class="headerText" href="../MainPage.php">Back to Home</a>
         &nbsp;&nbsp;&nbsp;
-        <a href="InsertionPages/productInsert.php"> Add Product </a>
+        <a href="InsertionPages/productInsert.php">Add Product</a>
     </div>
    
     <h2 class="TitleText">Product Information</h2>
@@ -51,10 +51,10 @@
                     <input type="submit" value="Edit"> 
                   </form>';
             ?>
-            </td> 
+            </td>
 
-            <td id = "PriceColumn"> <?php echo "$" . $Row['Price'];?> </td>
-            <td id="DescriptionColumn"> <?php echo $Row['Description'];?> </td>
+            <td id = "PriceColumn"> <?php echo "$" . $Row['Price'];?></td>
+            <td id="DescriptionColumn"> <?php echo $Row['Description'];?></td>
         </tr>
 
         <?php

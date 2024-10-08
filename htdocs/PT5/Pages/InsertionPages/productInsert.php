@@ -31,11 +31,11 @@
         <form method="post">
             <table>
                 <tr>
-                    <td> Product Name: <input type="text" id="ProductName" name="ProductName" placeholder="Enter product name"> </td>
+                    <td> Product Name: <input type="text" id="ProductName" name="ProductName" placeholder="Enter product name"></td>
                 </tr>
 
                 <tr>
-                    <td> Price: <input type="number" id="Price" name="Price" placeholder="Enter product price" min="0" step=".01"> </td>
+                    <td> Price: <input type="number" id="Price" name="Price" placeholder="Enter product price" min="0" step=".01"></td>
                 </tr>
                 <tr>
                     <td>Description:</td>
@@ -47,7 +47,7 @@
                 </tr>
 
                 <tr>
-                    <td id="SubmitButton"> <input type="Submit" value="Submit" name="Submit"> </td>
+                    <td id="SubmitButton"> <input type="Submit" value="Submit" name="Submit"></td>
                 </tr>
 
                 <tr>

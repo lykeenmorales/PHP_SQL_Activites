@@ -31,20 +31,20 @@
         <form method="post">
             <table>
                 <tr>
-                    <td> First Name: <input type="text" id="FirstName" name="FirstName" placeholder="Enter First Name" maxlength="50"> </td>
+                    <td> First Name: <input type="text" id="FirstName" name="FirstName" placeholder="Enter First Name" maxlength="50"></td>
                 </tr>
                 <tr>
-                    <td> Last Name: <input type="text" id="LastName" name="LastName" placeholder="Enter Last Name" maxlength="50"> </td>
+                    <td> Last Name: <input type="text" id="LastName" name="LastName" placeholder="Enter Last Name" maxlength="50"></td>
                 </tr>
                 <tr>
-                    <td> Phone: <input type="number" id="Phone" name="Phone" placeholder="Enter Phone" min="0" maxlength="50"> </td>
+                    <td> Phone: <input type="number" id="Phone" name="Phone" placeholder="Enter Phone" min="0" maxlength="50"></td>
                 </tr>
                 <tr>
-                    <td> Address: <input type="text" id="Address" name="Address" placeholder="Enter Address" maxlength="100"> </td>
+                    <td> Address: <input type="text" id="Address" name="Address" placeholder="Enter Address" maxlength="100"></td>
                 </tr>
 
                 <tr>
-                    <td id="SubmitButton"> <input type="Submit" value="Submit" name="Submit"> </td>
+                    <td id="SubmitButton"> <input type="Submit" value="Submit" name="Submit"></td>
                 </tr>
         
                 <tr>

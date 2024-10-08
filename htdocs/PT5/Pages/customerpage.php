@@ -53,9 +53,9 @@
                   </form>';
             ?>
             </td> 
-            <td id = "LastNameColumn"> <?php echo $Row['last_name'];?> </td>
-            <td id="PhoneColumn"> <?php echo $Row['Phone'];?> </td>
-            <td id="AddressColumn"> <?php echo $Row['Address'];?> </td>
+            <td id = "LastNameColumn"> <?php echo $Row['last_name'];?></td>
+            <td id="PhoneColumn"> <?php echo $Row['Phone'];?></td>
+            <td id="AddressColumn"> <?php echo $Row['Address'];?></td>
         </tr>
 
         <?php

@@ -68,16 +68,16 @@
         <form method="post" action="UpdateData.php">
             <table>
                 <tr>
-                    <td> First Name: <input type="text" id="FirstNameColumn" name="FirstNameColumn" placeholder="Enter first name" value="<?php echo htmlspecialchars($Row['first_name']); ?>"></td>
+                    <td> First Name: <input type="text" id="FirstNameColumn" name="FirstNameColumn" placeholder="Enter first name" value="<?php echo htmlspecialchars($Row['first_name']);?>"></td>
                 </tr>
                 <tr>
-                    <td> Last Name: <input type="text" id="LastNameColumn" name="LastNameColumn" placeholder="Enter last name" value="<?php echo htmlspecialchars($Row['last_name']); ?>"></td>
+                    <td> Last Name: <input type="text" id="LastNameColumn" name="LastNameColumn" placeholder="Enter last name" value="<?php echo htmlspecialchars($Row['last_name']);?>"></td>
                 </tr>
                 <tr>
-                    <td> Phone Number: <input type="number" id="PhoneColumn" name="PhoneColumn" minlength="11" maxlength="50" placeholder="Enter Phone Number" min="1" value=<?php echo ConvertNumber(); ?>></td>
+                    <td> Phone Number: <input type="number" id="PhoneColumn" name="PhoneColumn" minlength="11" maxlength="50" placeholder="Enter Phone Number" min="1" value=<?php echo ConvertNumber();?>></td>
                 </tr>
                 <tr>
-                    <td> Address: <input type="text" id="AddressColumn" name="AddressColumn" placeholder="Enter Address" maxlength="100" value="<?php echo htmlspecialchars($Row['Address']); ?>"></td>
+                    <td> Address: <input type="text" id="AddressColumn" name="AddressColumn" placeholder="Enter Address" maxlength="100" value="<?php echo htmlspecialchars($Row['Address']);?>"></td>
                 </tr>
 
                 <tr>
