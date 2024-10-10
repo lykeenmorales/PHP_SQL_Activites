@@ -31,10 +31,10 @@
 
     <table>
         <tr>
-            <th> First Name </th>
-            <th> Last Name </th>
-            <th> Phone Number</th>
-            <th> Address</th>
+            <th>First Name</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Email</th>
         </tr>
 
         <?php
@@ -45,7 +45,7 @@
             <td id="FirstNameColumn"> 
             <?php
             // Show the Name in the Table
-                echo $Row['first_name']; 
+                echo $Row['first_name'] . " " . $Row['last_name']; 
             // If User Click Edit Button they will be redirect to Editing page with the productID
                 echo '<form action="../customerEdit.php" method="POST"> 
                     <input type="hidden" name="CustomerID" value="' . $Row['CustomerID'] . '">
@@ -53,9 +53,9 @@
                   </form>';
             ?>
             </td> 
-            <td id = "LastNameColumn"> <?php echo $Row['last_name'];?></td>
             <td id="PhoneColumn"> <?php echo $Row['Phone'];?></td>
             <td id="AddressColumn"> <?php echo $Row['Address'];?></td>
+            <td id="EmailColumn"> <?php echo $Row['Email'];?></td>
         </tr>
 
         <?php

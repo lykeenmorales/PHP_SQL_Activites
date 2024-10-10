@@ -31,9 +31,10 @@
 
     <table>
         <tr>
-            <th> Product </th>
-            <th> Price </th>
-            <th> Description</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Quantity</th>
         </tr>
 
         <?php
@@ -55,6 +56,15 @@
 
             <td id = "PriceColumn"> <?php echo "$" . $Row['Price'];?></td>
             <td id="DescriptionColumn"> <?php echo $Row['Description'];?></td>
+            <td id="QuantityColumn"> 
+                <?php 
+                    if ($Row['StockQuantity'] <= 0 or $Row['StockQuantity'] == null){
+                        echo '<span style="color: red;">' . "Out of Stock" . '</span>';
+                    } else {
+                        echo $Row['StockQuantity'];
+                    }
+                ?>
+            </td>
         </tr>
 
         <?php

@@ -75,3 +75,8 @@ input::-webkit-inner-spin-button {
 
     font-size: 15px;
 }
+
+.Optional{
+    color: red;
+    font-weight: bold;
+}

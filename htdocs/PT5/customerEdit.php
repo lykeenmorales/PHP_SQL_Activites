@@ -65,23 +65,26 @@
     </div>
 
     <div id="CenterTable">
-        <form method="post" action="UpdateData.php">
+        <form id="MainForm" method="post" action="UpdateData.php" autocomplete="on">
             <table>
                 <tr>
-                    <td> First Name: <input type="text" id="FirstNameColumn" name="FirstNameColumn" placeholder="Enter first name" value="<?php echo htmlspecialchars($Row['first_name']);?>"></td>
+                    <td><label for="FirstNameColumn">First Name: </label><input type="text" id="FirstNameColumn" name="FirstNameColumn" placeholder="Enter first name" value="<?php echo htmlspecialchars($Row['first_name']);?>"></td>
                 </tr>
                 <tr>
-                    <td> Last Name: <input type="text" id="LastNameColumn" name="LastNameColumn" placeholder="Enter last name" value="<?php echo htmlspecialchars($Row['last_name']);?>"></td>
+                    <td><label for="LastNameColumn">Last Name: </label><input type="text" id="LastNameColumn" name="LastNameColumn" placeholder="Enter last name" value="<?php echo htmlspecialchars($Row['last_name']);?>"></td>
                 </tr>
                 <tr>
-                    <td> Phone Number: <input type="number" id="PhoneColumn" name="PhoneColumn" minlength="11" maxlength="50" placeholder="Enter Phone Number" min="1" value=<?php echo ConvertNumber();?>></td>
+                    <td><label for="PhoneColumn">Phone: </label><input type="number" id="PhoneColumn" name="PhoneColumn" minlength="11" maxlength="50" placeholder="Enter Phone Number" min="1" value=<?php echo ConvertNumber();?>></td>
                 </tr>
                 <tr>
-                    <td> Address: <input type="text" id="AddressColumn" name="AddressColumn" placeholder="Enter Address" maxlength="100" value="<?php echo htmlspecialchars($Row['Address']);?>"></td>
+                    <td><label for="AddressColumn">Address: </label><input type="text" id="AddressColumn" name="AddressColumn" placeholder="Enter Address" maxlength="100" value="<?php echo htmlspecialchars($Row['Address']);?>"></td>
+                </tr>
+                <tr>
+                    <td><label for="Email">Email:</label><input type="email" id="EmailColumn" name="Email" placeholder="Enter Email" value="<?php if ($Row['Email'] != null){echo htmlspecialchars($Row['Email']);} ;?>"><span class="Optional">*</span></td>
                 </tr>
 
                 <tr>
-                    <td id="SubmitButton"> <input type="Submit" value="Update" name="UpdateCustomerAccount"></td>
+                    <td id="SubmitButton"><input id="MainSubmitButton" type="Submit" value="Update" name="UpdateCustomerAccount">   <input id="DeleteButton" type="Submit" value="Delete" name="DeleteCustomerAccount"></td>
                 </tr>
 
                 <tr>
@@ -92,7 +95,11 @@
                                     if ($_SESSION['SuccessUpdateMessage'] == "Success"){
                                         echo '<br>Account Updated Successfully';
                                     }
-                                    else{
+                                    elseif ($_SESSION['SuccessUpdateMessage'] == "DeleteSuccess"){
+                                        echo '<br>Account Deleted Successfully';
+                                    }elseif ($_SESSION['SuccessUpdateMessage'] == "DeleteFailed"){
+                                        echo '<br>Account Delete Failed. Please Try Again';
+                                    }else{
                                         echo '<br>Account Update Failed {Empty Fields or Invalid Inputs}';
                                     }
                                 }
@@ -105,14 +112,38 @@
     </div>
 
     <script>
-        document.getElementById("SubmitButton").addEventListener("click", function(event){    
-            event.preventDefault(); 
+        const UpdateButton = document.getElementById("MainSubmitButton");
+        const DeleteButton = document.getElementById("DeleteButton");
+        const MainForm = document.getElementById("MainForm")
+
+        const TypeOfUpdate = document.createElement("input");
+        TypeOfUpdate.type = "hidden";
+        TypeOfUpdate.name = "TypeOfUpdate"
+        TypeOfUpdate.value = "CustomerUpdate"
+        
+        MainForm.appendChild(TypeOfUpdate);
+
+        UpdateButton.addEventListener("click", UpdateAccount);
+        DeleteButton.addEventListener("click", DeleteAccount);            
+
+        function UpdateAccount(event){
+            event.preventDefault();
 
             const FirstName = document.getElementById("FirstNameColumn").value;
             const LastName = document.getElementById("LastNameColumn").value;
             const Number = document.getElementById("PhoneColumn").value;
             const Address = document.getElementById("AddressColumn").value;
-            
+            const Email = document.getElementById("EmailColumn").value;
+
+            const EmailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+            if (Email != ""){
+                if (!EmailPattern.test(Email)){
+                    alert("Invalid Email");
+                    return;
+                }
+            }
+
             if (FirstName === "" || LastName === "" || Address === ""){
                 alert("Empty Fields");
                 return;
@@ -133,7 +164,22 @@
             }
 
             document.querySelector("form").submit();
-        })
+        }
+
+        function DeleteAccount(event){
+            event.preventDefault();
+
+            if (confirm("Are you sure you want to delete this Account?")){
+                const IsDelete = document.createElement("input")
+                IsDelete.type = "hidden"
+                IsDelete.name = "IsDelete"
+                IsDelete.value = "Delete"
+
+                MainForm.appendChild(IsDelete);
+
+                document.querySelector("form").submit();
+            }
+        }
     </script>
 </body>
 </html>
