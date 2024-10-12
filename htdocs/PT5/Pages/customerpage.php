@@ -7,6 +7,7 @@
 
     $QUERY = "SELECT * From customeraccount ORDER BY last_name ASC";
     $QUERYRESULT = mysqli_query($connection, $QUERY);
+
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +46,7 @@
             <td id="FirstNameColumn"> 
             <?php
             // Show the Name in the Table
-                echo $Row['first_name'] . " " . $Row['last_name']; 
+                echo $Row['last_name'] . ", " . $Row['first_name']; 
             // If User Click Edit Button they will be redirect to Editing page with the productID
                 echo '<form action="../customerEdit.php" method="POST"> 
                     <input type="hidden" name="CustomerID" value="' . $Row['CustomerID'] . '">

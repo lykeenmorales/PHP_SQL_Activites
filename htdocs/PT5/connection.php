@@ -7,9 +7,9 @@
 
     if (!$connection){
         die("Connection Failed" . mysqli_connect_error());
-    }
-
-    if ($DEBUG_PRINTING){
-        echo "Connection Successful";
+    }else{
+        if ($DEBUG_PRINTING){
+            echo "Connection Successful";
+        }
     }
 ?>
