@@ -50,14 +50,14 @@
 
     <table>
         <tr>
-            <th>Order ID</th>
-            <th>Customer Name</th>
-            <th>Order Date</th>
-          <th>Total Price</th>
-            <th>Order Status</th>
-            <th>Product Name</th>
-            <th>Product Price</th>
-            <th>Quantity</th>
+            <th> Order ID </th>
+            <th> Customer Name </th>
+            <th> Product </th>
+            <th> Product Price </th>
+            <th> Quantity </th>
+            <th> Date of Order </th>
+            <th> Total Amount </th>
+            <th> Order Status </th>
         </tr>
 
         <?php
@@ -67,12 +67,12 @@
         <tr>
             <td id="OrderIDColumn"> <?php echo $Row['OrderID'];?></td>
             <td id="CustomerNameColumn"> <?php echo $Row['last_name'] . ", " . $Row['first_name'];?></td>
-            <td id="OrderDateColumn"> <?php echo $Row['OrderDate'];?></td>
-            <td id="TotalPriceColumn"> <?php echo $Row['TotalPrice'];?></td>
-            <td id="OrderStatusColumn"> <?php echo $Row['OrderStatus'];?></td>
             <td id="ProductNameColumn"> <?php echo $Row['Name'];?></td>
-            <td id="ProductPriceColumn"> <?php echo $Row['Price'];?></td>
+            <td id="ProductPriceColumn"> <?php echo '$' . $Row['Price'];?></td>
             <td id="QuantityColumn"> <?php echo $Row['Quant'];?></td>
+            <td id="OrderDateColumn"> <?php echo $Row['OrderDate'];?></td>
+            <td id="TotalPriceColumn"> <?php echo '$' . $Row['TotalPrice'];?></td>
+            <td id="OrderStatusColumn"> <?php echo $Row['OrderStatus'];?></td>
         </tr>
 
         <?php

@@ -17,7 +17,6 @@ function ConvertToPhoneNumber($PhoneNumber){
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // For Customer Account Update
     if (isset($_POST['TypeOfUpdate'])){
         if ($_POST['TypeOfUpdate'] == "CustomerUpdate"){
             // Checking if IsDelete is set
@@ -78,9 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 exit;
             }
         }
-    }
-    // For Products Update
-    if (isset($_POST['TypeOfUpdate'])){
+    
         if ($_POST['TypeOfUpdate'] == "ProductUpdate"){
             // Checking if IsDelete is set
             if (isset($_POST['IsDelete'])){

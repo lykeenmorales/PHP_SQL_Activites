@@ -69,7 +69,7 @@
 
                                                 while ($Row = mysqli_fetch_assoc($QUERYRESULT)){
                                                     if ($Row['StockQuantity'] > 0){
-                                                        echo '<li><button class="dropdown-item btn-custom-hover" type="button" onclick="selectItem(\''.addslashes(htmlspecialchars($Row['Name'])).'\','.$Row['productID'].')">'.htmlspecialchars($Row['Name']).'</button></li>';
+                                                        echo '<li><button class="dropdown-item btn-custom-hover" type="button" onclick="selectItem(\''.addslashes(htmlspecialchars($Row['Name'])).'\','.$Row['productID'].')">'.htmlspecialchars($Row['Name'] . " (" . $Row['StockQuantity'] . ") ").'</button></li>';
                                                         array_push($ProductsArray, $Row['Name']);
                                                     }
                                                 }
@@ -85,7 +85,7 @@
                         <td>
                             <div class="mb-2 justify-content-center">
                                 <label for="numberInput" class="form-label">Quantity: </label>
-                                <input type="number" class="form-control custom-input" id="numberInput" placeholder="0" min="1" max="1000" required>
+                                <input type="number" class="form-control custom-input" id="numberInput" placeholder="0" min="1" max="1000" name="AmountOfProduct" required>
                                 <div class="invalid-feedback" name="quantityFeedBack">
                                     Amount cant be 0 or negative.
                                 </div>
@@ -146,6 +146,30 @@
         const items = dropdownMenu.querySelectorAll('.dropdown-item');
         const forms = document.querySelectorAll('.needs-validation');
         const ProductID = document.getElementById('ProductID');
+        
+        // Check if returned by errored
+        const ErrorSession = '<?php 
+            if(isset($_SESSION['Error'])){
+                echo $_SESSION['Error'];
+                unset($_SESSION['Error']);
+            }
+        ?>'
+
+        const SuccessSession = '<?php
+            if (isset($_SESSION['Success'])){
+                echo $_SESSION['Success'];
+                unset($_SESSION['Success']);
+            }
+        ?>'
+
+        if (ErrorSession != null && ErrorSession != 0){
+            alert("Error: " + ErrorSession);
+        }
+
+        if (SuccessSession != null && SuccessSession != 0){
+            alert("Success: " + SuccessSession);
+        }
+        
         
         function selectItem(item, ReceivedProductID){
             searchInput.value = item;
@@ -237,6 +261,16 @@
                 document.getElementsByClassName('modal-body')[0].textContent = "Order has been successfully placed for customer: <?php echo $_SESSION['FirstName'] . ", " . $_SESSION['LastName'] ?>";
                 const SuccessfullModal = new bootstrap.Modal(document.getElementById('SuccessfullModal'));
                 SuccessfullModal.show();
+
+                // Create TimeZone Value for DateTime in sql data
+                const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+                const TimeZoneInput = document.createElement("input");
+                TimeZoneInput.type = "hidden";
+                TimeZoneInput.name = "TimeZone";
+                TimeZoneInput.value = userTimezone;
+
+                MainForm.appendChild(TimeZoneInput);
 
                 document.getElementById('Confirm').addEventListener('click', function(){
                     SuccessfullModal.hide();
