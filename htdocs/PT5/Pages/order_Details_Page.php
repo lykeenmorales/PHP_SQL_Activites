@@ -44,7 +44,6 @@
     <div id = "Header">
         <a class="headerText" href="../MainPage.php"> Back to Home </a>
         &nbsp;&nbsp;&nbsp;
-        <a href="MakeOrderPage.php"> Add Order </a>
     </div>
    
     <h2 class="TitleText">Order Details</h2>
@@ -54,7 +53,7 @@
             <th>Order ID</th>
             <th>Customer Name</th>
             <th>Order Date</th>
-            <th>Total Price</th>
+          <th>Total Price</th>
             <th>Order Status</th>
             <th>Product Name</th>
             <th>Product Price</th>
