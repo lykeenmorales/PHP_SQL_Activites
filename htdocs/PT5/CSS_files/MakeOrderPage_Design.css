@@ -1,0 +1,112 @@
+#TitleText{
+    position: relative;
+
+    color: #86c232;
+
+    text-align: center;
+    top: 100px;
+}
+
+
+#CenterTable{
+    position: relative;
+
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#CenterTable form table{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    background-color: #a0a0a0 !important;
+    box-shadow: 0 0 50px 15px rgba(49,61,67,1);
+
+    position: relative;
+
+    margin-top: 200px;
+
+    height: 300px;
+    width: 500px;
+
+    border-radius: 25px;
+    padding: 10px;
+}
+
+.FormInputs{
+    position: absolute;
+    z-index: 1;
+
+    margin-top: 250px !important;
+    margin-left: 145px !important;
+}
+
+.dropdown-menu input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Make the dropdown scrollable and limit the height */
+.dropdown-menu-scrollable {
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto; 
+}
+
+.custom-select-size {
+    width: 250px;   
+    height: 30px; 
+    padding: 0.5rem 1rem; 
+    line-height: 1.5; 
+    font-size: 16px; 
+    display: flex;
+    align-items: center; 
+
+    background-color: rgba(255, 255, 255, 0.548);
+    border-color: #000000;
+
+    color: black;
+}
+
+.custom-select-size:hover {
+    background-color: rgba(255, 255, 255, 0.123);
+    border-color: #000000;
+}
+
+.btn-custom-hover:hover {
+    background-color: rgba(36, 35, 35, 0.26); 
+    color: #000000; 
+}
+
+.custom-input {
+    width: 200px; 
+    height: 25px; 
+    font-size: 18px;
+    margin: 0 auto; /* Center input field horizontally */ 
+}
+
+.custom-input-text-size{
+    width: 200px; 
+    height: 10px; 
+    margin: 0 auto; /* Center input field horizontally */ 
+}
+
+/* Glowing border effect */
+.custom-input:focus {
+    border-color: #007bff; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+custom-input-Hover:hover {
+    border-color: #007bff; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+th, td{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

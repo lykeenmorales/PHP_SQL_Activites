@@ -3,6 +3,21 @@
     include 'connection.php';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['MakeOrderButton'])) {
+            $_SESSION['CustomerID'] = $_POST['CustomerID'];
+            $Query = "SELECT * FROM customeraccount WHERE CustomerID = " . $_SESSION['CustomerID'];
+            $QUERYRESULT = mysqli_query($connection, $Query);
+
+            $Row = mysqli_fetch_assoc($QUERYRESULT);
+
+            $_SESSION['FirstName'] = $Row['first_name'];
+            $_SESSION['LastName'] = $Row['last_name'];
+            $_SESSION['PhoneNumber'] = $Row['Phone'];
+            $_SESSION['Address'] = $Row['Address'];
+            
+            header("Location: Pages/MakeOrderPage.php");
+            exit();
+        }
         if (isset($_POST['CustomerID'])) {
             $_SESSION['CustomerID'] = $_POST['CustomerID'];
 
@@ -30,15 +45,8 @@
     <link rel="stylesheet" href="CSS_files/CustomerInsertEditDesign.css">
 
     <?php
-        $Query = "SELECT * FROM customeraccount WHERE CustomerID = " . $_SESSION['CustomerID'];
-        $QUERYRESULT = mysqli_query($connection, $Query);
-
-        $Row = mysqli_fetch_assoc($QUERYRESULT);
-
         function ConvertNumber(){
-            global $Row;
-
-            $PhoneNumber = $Row['Phone'];
+            $PhoneNumber = $_SESSION['PhoneNumber'];
             $PhoneNumberStringEdit = null;
 
             if (str_replace('+63', '09', $PhoneNumber)){
@@ -68,16 +76,16 @@
         <form id="MainForm" method="post" action="UpdateData.php" autocomplete="on">
             <table>
                 <tr>
-                    <td><label for="FirstNameColumn">First Name: </label><input type="text" id="FirstNameColumn" name="FirstNameColumn" placeholder="Enter first name" value="<?php echo htmlspecialchars($Row['first_name']);?>"></td>
+                    <td><label for="FirstNameColumn">First Name: </label><input type="text" id="FirstNameColumn" name="FirstNameColumn" placeholder="Enter first name" value="<?php echo htmlspecialchars($_SESSION['FirstName']);?>"></td>
                 </tr>
                 <tr>
-                    <td><label for="LastNameColumn">Last Name: </label><input type="text" id="LastNameColumn" name="LastNameColumn" placeholder="Enter last name" value="<?php echo htmlspecialchars($Row['last_name']);?>"></td>
+                    <td><label for="LastNameColumn">Last Name: </label><input type="text" id="LastNameColumn" name="LastNameColumn" placeholder="Enter last name" value="<?php echo htmlspecialchars($_SESSION['LastName']);?>"></td>
                 </tr>
                 <tr>
                     <td><label for="PhoneColumn">Phone: </label><input type="number" id="PhoneColumn" name="PhoneColumn" minlength="11" maxlength="50" placeholder="Enter Phone Number" min="1" value=<?php echo ConvertNumber();?>></td>
                 </tr>
                 <tr>
-                    <td><label for="AddressColumn">Address: </label><input type="text" id="AddressColumn" name="AddressColumn" placeholder="Enter Address" maxlength="100" value="<?php echo htmlspecialchars($Row['Address']);?>"></td>
+                    <td><label for="AddressColumn">Address: </label><input type="text" id="AddressColumn" name="AddressColumn" placeholder="Enter Address" maxlength="100" value="<?php echo htmlspecialchars($_SESSION['Address']);?>"></td>
                 </tr>
                 <tr>
                     <td><label for="Email">Email:</label><input type="email" id="EmailColumn" name="Email" placeholder="Enter Email" value="<?php if ($Row['Email'] != null){echo htmlspecialchars($Row['Email']);} ;?>"><span class="Optional">*</span></td>
