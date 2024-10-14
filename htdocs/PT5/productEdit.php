@@ -49,26 +49,38 @@
     </div>
 
     <div id="CenterTable">
-        <form method="post" action="UpdateData.php">
+        <form id="MainForm" method="post" action="UpdateData.php">
             <table>
                 <tr>
-                    <td> Product Name: <input type="text" id="ProductName" name="ProductName" placeholder="Enter product name" value="<?php echo htmlspecialchars($Row['Name']); ?>"></td>
-                </tr>
-
-                <tr>
-                    <td> Price: <input type="number" id="Price" name="Price" placeholder="Enter product price" min="0" step=".01" value="<?php echo htmlspecialchars($Row['Price']); ?>"></td>
-                </tr>
-                <tr>
-                    <td>Description:</td>
-                </tr>
-                <tr>
                     <td>
-                    <textarea name="DescriptionText" id="DescriptionText" rows="5" cols="50", name="DescriptionText", placeholder="Description about the product..."><?php echo htmlspecialchars($Row['Description']); ?></textarea>
+                        <label for="ProductName">Product Name: </label>
+                        <input type="text" id="ProductName" name="ProductName" placeholder="Enter product name" value="<?php echo htmlspecialchars($Row['Name']); ?>">
                     </td>
                 </tr>
 
                 <tr>
-                    <td id="SubmitButton"> <input type="Submit" value="Update" name="UpdateProduct"></td>
+                    <td>
+                        <label for="Price">Price: </label>
+                        <input type="number" id="Price" name="Price" placeholder="Enter product price" min="0" step=".01" value="<?php echo htmlspecialchars($Row['Price']); ?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="StockQuantity">Quantity: </label>
+                        <input type="number" id="StockQuantity" name="StockQuantity" placeholder="Enter Product Stock Quantity" min="0" step="1" value="<?php if ($Row['StockQuantity'] != null or $Row['StockQuantity'] != 0){echo htmlspecialchars($Row['StockQuantity']);}else{echo '0';}?>">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="DescriptionText">Description: </label></td>
+                </tr>
+                <tr>
+                    <td>
+                    <textarea name="DescriptionText" id="DescriptionText" rows="5" cols="50", name="DescriptionText", placeholder="Description about the product..."><?php echo htmlspecialchars($Row['Description']);?></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td id="SubmitButton"> <input id="MainSubmitButton" type="Submit" value="Update" name="UpdateProduct">   <input id="DeleteButton" type="Submit" value="Delete" name="DeleteCustomerAccount"></td>
                 </tr>
 
                 <tr>
@@ -90,5 +102,43 @@
             </table>
         </form>
     </div>
+
+    <script>
+        const SubmitButton = document.getElementById("MainSubmitButton");
+        const DeleteButton = document.getElementById("DeleteButton");
+        const MainForm = document.getElementById("MainForm");
+        
+        const TypeOfUpdate = document.createElement("input");
+        TypeOfUpdate.type = "hidden";
+        TypeOfUpdate.name = "TypeOfUpdate"
+        TypeOfUpdate.value = "ProductUpdate"
+        
+        MainForm.appendChild(TypeOfUpdate);
+
+
+        SubmitButton.addEventListener('click', UpdateData);
+        DeleteButton.addEventListener('click', DeleteData);
+
+        function UpdateData(event){
+            event.preventDefault();
+
+            document.querySelector("form").submit();
+        }
+
+        function DeleteData(event){
+            event.preventDefault();
+
+            if (confirm("Are you sure you want to delete this product?")){
+                const IsDelete = document.createElement("input");
+                IsDelete.type = "hidden";
+                IsDelete.name = "IsDelete"
+                IsDelete.value = "Delete"
+
+                MainForm.appendChild(IsDelete);
+
+                document.querySelector("form").submit();
+            }                
+        }
+    </script>
 </body>
 </html>

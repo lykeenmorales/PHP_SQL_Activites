@@ -18,6 +18,7 @@
         <h1>Stationary Supplies</h1>
         <input type="button" class="customerShowButton" value="View Customer Accounts", onclick="window.location.href = 'Pages/customerpage.php'">
         <input type="button" class="ProductShowButton" value="View Products Information" onclick="window.location.href = 'Pages/productPage.php'">
+        <input type="button" class="OrderButton" value="View Customer Orders" onclick="window.location.href = 'Pages/order_Details_Page.php'">
     </div>
 </body>
 </html>

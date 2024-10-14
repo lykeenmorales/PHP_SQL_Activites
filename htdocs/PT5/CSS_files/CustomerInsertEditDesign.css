@@ -16,7 +16,7 @@ input::-webkit-inner-spin-button {
 }
 
 #Header{
-    background-color: #222626 !important;
+    background-color: rgb(24, 24, 24) !important;
     position: absolute;
     width: 100% !important;
     padding-top: 15px;
@@ -24,7 +24,7 @@ input::-webkit-inner-spin-button {
 
     text-align: left;
 
-    top: 25px;
+    top: 10px;
 }
 
 
@@ -74,4 +74,9 @@ input::-webkit-inner-spin-button {
     padding-left: 15px;
 
     font-size: 15px;
+}
+
+.Optional{
+    color: red;
+    font-weight: bold;
 }

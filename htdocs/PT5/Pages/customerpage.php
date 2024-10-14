@@ -7,6 +7,7 @@
 
     $QUERY = "SELECT * From customeraccount ORDER BY last_name ASC";
     $QUERYRESULT = mysqli_query($connection, $QUERY);
+
 ?>
 
 <!DOCTYPE html>
@@ -29,39 +30,43 @@
    
     <h2 class="TitleText">Customer Accounts Information</h2>
 
-    <table>
-        <tr>
-            <th> First Name </th>
-            <th> Last Name </th>
-            <th> Phone Number</th>
-            <th> Address</th>
-        </tr>
+    <div class="container">
+        <div class="table-container">
+        <table>
+            <tr>
+                <th>First Name</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Email</th>
+            </tr>
 
-        <?php
-            while ($Row = mysqli_fetch_assoc($QUERYRESULT)){
-        ?>
-
-        <tr>
-            <td id="FirstNameColumn"> 
             <?php
-            // Show the Name in the Table
-                echo $Row['first_name']; 
-            // If User Click Edit Button they will be redirect to Editing page with the productID
-                echo '<form action="../customerEdit.php" method="POST"> 
-                    <input type="hidden" name="CustomerID" value="' . $Row['CustomerID'] . '">
-                    <input type="submit" value="Edit"> 
-                  </form>';
+                while ($Row = mysqli_fetch_assoc($QUERYRESULT)){
             ?>
-            </td> 
-            <td id = "LastNameColumn"> <?php echo $Row['last_name'];?></td>
-            <td id="PhoneColumn"> <?php echo $Row['Phone'];?></td>
-            <td id="AddressColumn"> <?php echo $Row['Address'];?></td>
-        </tr>
 
-        <?php
-             }
-        ?>
-     </table>
+            <tr>
+                <td id="FirstNameColumn"> 
+                <?php
+                // Show the Name in the Table
+                    echo $Row['last_name'] . ", " . $Row['first_name']; 
+                // If User Click Edit Button they will be redirect to Editing page with the productID
+                    echo '<form action="../customerEdit.php" method="POST" id="MainForm"> 
+                        <input type="hidden" name="CustomerID" value="' . $Row['CustomerID'] . '">
+                        <input type="submit" value="Edit" name="EditButton" id="EditButtonInput"> 
+                        <input type="submit" value="Make Order" name="MakeOrderButton" id="MakeOrderButtonInput"> 
+                    </form>';
+                ?>
+                </td> 
+                <td id="PhoneColumn"> <?php echo $Row['Phone'];?></td>
+                <td id="AddressColumn"> <?php echo $Row['Address'];?></td>
+                <td id="EmailColumn"> <?php echo $Row['Email'];?></td>
+            </tr>
 
+            <?php
+                }
+            ?>
+        </table>
+        </div>
+    </div>
 </body>
 </html>
