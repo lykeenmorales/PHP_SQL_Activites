@@ -23,8 +23,8 @@
     />
 
     <!-- Custom CSS -->
-        <link rel="stylesheet" href="../CSS_files/mainDesign.css">
-        <link rel="stylesheet" href="../CSS_files/MakeOrderPage_Design.css">
+    <link rel="stylesheet" href="../CSS_files/mainDesign.css">
+    <link rel="stylesheet" href="../CSS_files/MakeOrderPage_Design.css">
 </head>
 
 <body>
