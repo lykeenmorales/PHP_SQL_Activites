@@ -46,7 +46,7 @@
     FROM 
     customeraccount ca
 
-    JOIN  orders o ON o.CustomerID = ca.CustomerID
+    JOIN orders o ON o.CustomerID = ca.CustomerID
     JOIN order_details od ON od.OrderID = o.OrderID
     JOIN products p ON od.ProductID = p.ProductID
     WHERE  o.CustomerID = ca.CustomerID
