@@ -44,7 +44,10 @@
             width: 100% !important;  /* Makes the chart take full width */
         }
 
-
+        #TotalSalesChart{
+            height: 200px !important; /* You can set this to whatever height you prefer */
+            width: 100% !important;  /* Makes the chart take full width */
+        }
 
         /* Responsive styles for larger screens */
         @media (min-width: 768px) {
