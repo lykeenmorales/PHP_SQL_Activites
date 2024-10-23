@@ -223,7 +223,7 @@
                 $('#sidebar').toggleClass('show');
                 $('#mainContent').toggleClass('shift');
                 
-                console.log(IsOpen);
+                //console.log(IsOpen);
 
                 if (IsOpen == "true" || IsOpen == true ){
                     jsFunctions.SendAJXCallback({CallBack:'SideNavBarOpen', Data:{IsSideNavOpenValue:"false"}})

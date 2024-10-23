@@ -23,7 +23,6 @@
             unset($_SESSION[$keys]);
         }
     }
-
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +36,23 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     
     <link rel="stylesheet" href="Css/MainDesign.css">
+
+    <style>
+        /* Ensure the chart canvas takes full width */
+        #purchaseChart {
+            height: 250px !important; /* You can set this to whatever height you prefer */
+            width: 100% !important;  /* Makes the chart take full width */
+        }
+
+
+
+        /* Responsive styles for larger screens */
+        @media (min-width: 768px) {
+            #purchaseChart {
+                height: 300px; /* Adjust height for larger screens */
+            }
+        }
+    </style>
 </head>
 <body>       
 
@@ -63,25 +79,82 @@
 
     <!-- Main Content Area -->
     <div class="main-content" id="mainContent">
-        <h1>Main Content Area</h1>
-        <p>test</p>
-        <p>main content goes here. This area will adjust when the sidebar is toggled.</p>
-
-
+        <div class="container justify-content-md-center text-center">
+            <div class="row">
+                <div class="col-lg-4 mx-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Top 5 Most Purchased Products</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="mostPurchaseChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mx-auto mt-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Total Sales</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="TotalSalesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-lg-4 mx-auto mt-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Depleting Stock Items</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="purchaseChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mx-auto mt-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Depleting Stock Items</h4>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="mainchart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-
-
 
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script type="module">        
         // Import some functions
         import * as jsFunctions from './mainFunctions/Functions.js';
+
+        var ctx = document.getElementById('mostPurchaseChart').getContext('2d');
+        var ctx2 = document.getElementById('TotalSalesChart').getContext('2d');
+        var chart;
+        var chart2;
+
+        const chartColors = [
+            'rgba(54, 162, 235, 0.6)',  // Blue
+            'rgba(255, 99, 132, 0.6)',  // Red
+            'rgba(75, 192, 192, 0.6)',  // Teal
+            'rgba(255, 206, 86, 0.6)',  // Yellow
+            'rgba(153, 102, 255, 0.6)', // Purple
+            'rgba(255, 159, 64, 0.6)',  // Orange
+            'rgba(199, 199, 199, 0.6)',  // Grey
+            'rgba(83, 102, 139, 0.6)',   // Dark Blue
+            'rgba(186, 134, 33, 0.6)',   // Brown
+            'rgba(124, 186, 43, 0.6)'    // Green
+        ];
 
         var IsOpen = "<?php echo $IsSideNavOpen; ?>";
 
@@ -94,8 +167,6 @@
             $('#menuToggle').click(function() {
                 $('#sidebar').toggleClass('show');
                 $('#mainContent').toggleClass('shift');
-                
-                console.log(IsOpen);
 
                 if (IsOpen == "true" || IsOpen == true ){
                     jsFunctions.SendMainAJXCallback({CallBack:'SideNavBarOpen', Data:{IsSideNavOpenValue:"false"}})
@@ -107,6 +178,120 @@
             })
         });
 
+        // Using Json dataType
+        function fetchAndUpdateChart() {
+            $.ajax({
+                url: './mainFunctions/pageFunctions/fetch_top_products.php', 
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log('Success:', data); 
+
+                    if (data.products.length === 0) {
+                        console.log('No products found.');
+                        return;
+                    }
+
+                    var products = data.products;
+                    var purchases = data.purchases;
+
+                    if (chart) {
+                        chart.destroy();  
+                    }
+
+                    chart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: products,
+                            datasets: [{
+                                label: 'Total Purchases',
+                                data: purchases,
+                                backgroundColor: chartColors,
+                                borderColor: chartColors.map(color => color.replace('0.6', '1')),
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        },
+                        
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error fetching data: ' + textStatus, errorThrown);
+                    console.log('Response Text:', jqXHR.responseText); // testing log
+                }
+            });
+        }
+
+        function fetchSalesData(){
+            $.ajax({
+                url: './mainFunctions/pageFunctions/fetch_Total_sales.php', 
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log('Success:', data); 
+                    
+                    var monthDataLabel = data.months;
+                    var salesData = data.TotalSales;
+
+                    if (chart2) {
+                        chart2.destroy();  
+                    }
+
+                    chart2 = new Chart(ctx2, {
+                        type: 'line',
+                        data: {
+                            labels: monthDataLabel,
+                            datasets: [{
+                                label: 'Total Sales',
+                                data: salesData,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Date'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Total Sales'
+                                    },
+                                    beginAtZero: true
+                                }
+                            }
+                        },
+                        
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error fetching data: ' + textStatus, errorThrown);
+                    console.log('Response Text:', jqXHR.responseText); // testing log
+                }
+            });
+        }
+
+        // First Load
+        fetchAndUpdateChart();
+        fetchSalesData();
+
+        // Refresh Every 100 seconds [UPDATE]
+        setInterval(fetchAndUpdateChart, 100000);
     </script>
 </body>
 </html>

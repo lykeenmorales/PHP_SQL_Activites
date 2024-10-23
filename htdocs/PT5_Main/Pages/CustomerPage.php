@@ -79,7 +79,7 @@
                 <i class="bi bi-list"></i>
             </button>
             <h4 class="text-center fs-4 custom-title-text">Stationary Supplies</h4>
-            <a class="text-center fs-5 custom-header-color custom-Add-link" href="CustomerAdd.php"> Add Customer Account </a>
+            <a class="text-center custom-Add-link" href="CustomerAdd.php"> Add Customer Account </a>
         </div>
     </nav>
 
@@ -177,7 +177,7 @@
                 $('#sidebar').toggleClass('show');
                 $('#mainContent').toggleClass('shift');
                 
-                console.log(IsOpen);
+                //console.log(IsOpen);
 
                 if (IsOpen == "true" || IsOpen == true ){
                     jsFunctions.SendAJXCallback({CallBack:'SideNavBarOpen', Data:{IsSideNavOpenValue:"false"}})
@@ -274,7 +274,7 @@
                 
                 if (found) {
                     tr[i].style.display = '';
-                    console.log(tr[i]);
+                    //console.log(tr[i]);
                 } else {
                     tr[i].style.display = 'none';
                 }

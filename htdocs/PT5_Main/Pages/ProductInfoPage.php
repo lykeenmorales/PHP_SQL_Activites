@@ -93,7 +93,7 @@
                 <i class="bi bi-list"></i>
             </button>    
             <h4 class="text-center fs-4 custom-title-text">Stationary Supplies</h4>
-            <a class="text-center fs-5 custom-header-color custom-Add-link" href="ProductAdd.php"> Add Product </a>
+            <a class="text-center custom-Add-link" href="ProductAdd.php"> Add Product </a>
         </div>
     </nav>
 
@@ -167,7 +167,7 @@
         var IsOpen = "<?php echo $IsSideNavOpen; ?>";
         var IsVisibleAllProducts = "<?php echo $VisibleAllProducts; ?>";
     
-        console.log(IsVisibleAllProducts);
+        //console.log(IsVisibleAllProducts);
 
         $(document).ready(function() {
             if (IsOpen == "true"){
