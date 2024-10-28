@@ -1,10 +1,10 @@
 <?php
     session_start();
 
-    if (isset($_SESSION['UserID'])){
-        if (isset($_SESSION['UserType'])){
-            if ($_SESSION['UserType'] == "Admin"){
-                header("Location: homepage.php");
+    if (isset($_SESSION['Login_UserID'])){
+        if (isset($_SESSION['Login_UserType'])){
+            if ($_SESSION['Login_UserType'] == "Admin"){
+                header("Location: ../homepage.php");
             }else{
                 header("Location: clientHomePage.php");
             }
@@ -150,97 +150,96 @@
             <p class="title">Register</p>
         </div>
 
-    <form action="#!" method="post" id="MainForm" novalidate>
-        <div class="row g-3 justify-content-center text-center">
-            <!-- First Name input -->  
-            <div class="col-md-7 col-lg-3 col-10 position-relative">
-                <!-- First Name input -->
-                <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="text" id="FirstnameInput" name="FirstNameInput" class="form-control" autocomplete='new-First-Name-off' style="color: white;" required/>
-                    <label class="form-label" for="form2Example2">First Name</label>
-                    <div class="invalid-feedback" name="invalid-FirstName-feedback"> </div>
-                </div>
-            </div>
-            
-            <!-- Last Name input -->
-            <div class="col-md-7 col-lg-3 col-10 position-relative">  
-                <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="text" id="LastnameInput" name="LastNameInput" class="form-control" autocomplete='new-Last-Name-off' style="color: white;" required />
-                    <label class="form-label" for="form2Example3">Last Name</label>
-                    <div class="invalid-feedback" name="invalid-LastName-feedback"> </div>
-                </div>
-            </div>
-
-            <div class="w-100"></div>
-
-            <!-- Email input -->
-            <?php
-                if (isset($_SESSION['ReceivedEmail'])){
-                    echo '
-                    <div class="col-md-7 col-lg-3 col-10 position-relative">
-                        <div data-mdb-input-init class="form-outline mb-4">
-                            <input type="email" id="emailInput" name="EmailInput" autocomplete="new-email-address-off" class="form-control" disabled readonly value =\'' . $_SESSION['ReceivedEmail'] . '\' style="color: white;" />
-                            <label class="form-label" for="emailInput">Email address (Read Only)</label>
-                            <div class="invalid-feedback" name="invalid-Email-feedback"> </div>
-                        </div>
+        <form action="../mainFunctions/pageFunctions/registeraccount.php" method="post" id="MainForm" novalidate>
+            <div class="row g-3 justify-content-center text-center">
+                <!-- First Name input -->  
+                <div class="col-md-7 col-lg-3 col-10 position-relative">
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="text" id="FirstnameInput" name="FirstNameInput" class="form-control" autocomplete='new-First-Name-off' style="color: white;" required/>
+                        <label class="form-label" for="form2Example2">First Name</label>
+                        <div class="invalid-feedback" name="invalid-FirstName-feedback"> </div>
                     </div>
-                    ';
-                }else{
-                    echo '
-                    <div class="col-md-7 col-lg-3 col-10 position-relative">
-                        <div data-mdb-input-init class="form-outline mb-4">
-                            <input type="email" id="emailInput" name="EmailInput" autocomplete="new-email-address-off" class="form-control" style="color: white;" required />
-                            <label class="form-label" for="emailInput">Email address</label>
-                            <div class="invalid-feedback" name="invalid-Email-feedback"> </div>
-                        </div>
+                </div>
+                
+                <!-- Last Name input -->
+                <div class="col-md-7 col-lg-3 col-10 position-relative">  
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="text" id="LastnameInput" name="LastNameInput" class="form-control" autocomplete='new-Last-Name-off' style="color: white;" required />
+                        <label class="form-label" for="form2Example3">Last Name</label>
+                        <div class="invalid-feedback" name="invalid-LastName-feedback"> </div>
                     </div>
-                    
-                    ';
-                }
-            ?>
-
-            <!-- Address input -->
-            <div class="col-md-7 col-lg-3 col-10 position-relative">
-                <div data-mdb-input-init class="form-outline mb-4" autocomplete='new-address-Field'>
-                    <input type="text" id="AddressInput" name="Location" class="form-control" style="color: white;" required />
-                    <label class="form-label" for="form2Example3"> Location </label>
-                    <div class="invalid-feedback" name="invalid-Address-feedback"> </div>
-                </div>    
-            </div>
-            
-            <div class="w-100"></div>
-
-            <!-- Phone Number input -->
-            <div class="col-md-7 col-lg-3 col-10 position-relative">
-                <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="number" id="PhoneNumberInput" name="PhoneNumber" class="form-control" autocomplete='new-Phone-Number-off' style="color: white;" required />
-                    <label class="form-label" for="form2Example3">Phone Number</label>
-                    <div class="invalid-feedback" name="invalid-PhoneNumber-feedback"> </div>
                 </div>
-            </div>
-            
-            <!-- Password input -->
-            <div class="col-md-7 col-lg-3 col-10 position-relative">
-                <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="password" id="passwordInput" name="userPassword" class="form-control" autocomplete='new-Password-off' style="color: white;" required />
-                    <label class="form-label" for="form2Example4">Password</label>
-                    <div class="invalid-feedback" name="invalid-Password-feedback"> </div>
-                    <div class="valid-feedback" name="valid-Password-feedback"> good </div>
+
+                <div class="w-100"></div>
+
+                <!-- Email input -->
+                <?php
+                    if (isset($_SESSION['ReceivedEmail'])){
+                        echo '
+                        <div class="col-md-7 col-lg-3 col-10 position-relative">
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input type="email" id="emailInput" name="EmailInput" autocomplete="new-email-address-off" class="form-control" readonly value =\'' . $_SESSION['ReceivedEmail'] . '\' style="color: white;" />
+                                <label class="form-label" for="emailInput">Email address (Read Only)</label>
+                                <div class="invalid-feedback" name="invalid-Email-feedback"> </div>
+                            </div>
+                        </div>
+                        ';
+                    }else{
+                        echo '
+                        <div class="col-md-7 col-lg-3 col-10 position-relative">
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input type="email" id="emailInput" name="EmailInput" autocomplete="new-email-address-off" class="form-control" style="color: white;" required />
+                                <label class="form-label" for="emailInput">Email address</label>
+                                <div class="invalid-feedback" name="invalid-Email-feedback"> </div>
+                            </div>
+                        </div>
+                        
+                        ';
+                    }
+                ?>
+
+                <!-- Address input -->
+                <div class="col-md-7 col-lg-3 col-10 position-relative">
+                    <div data-mdb-input-init class="form-outline mb-4" autocomplete='new-address-Field'>
+                        <input type="text" id="AddressInput" name="Location" class="form-control" style="color: white;" required />
+                        <label class="form-label" for="form2Example3"> Location </label>
+                        <div class="invalid-feedback" name="invalid-Address-feedback"> </div>
+                    </div>    
                 </div>
+                
+                <div class="w-100"></div>
+
+                <!-- Phone Number input -->
+                <div class="col-md-7 col-lg-3 col-10 position-relative">
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="number" id="PhoneNumberInput" name="PhoneNumber" class="form-control" autocomplete='new-Phone-Number-off' style="color: white;" required />
+                        <label class="form-label" for="form2Example3">Phone Number</label>
+                        <div class="invalid-feedback" name="invalid-PhoneNumber-feedback"> </div>
+                    </div>
+                </div>
+                
+                <!-- Password input -->
+                <div class="col-md-7 col-lg-3 col-10 position-relative">
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="password" id="passwordInput" name="userPassword" class="form-control" autocomplete='new-Password-off' style="color: white;" required />
+                        <label class="form-label" for="form2Example4">Password</label>
+                        <div class="invalid-feedback" name="invalid-Password-feedback"> </div>
+                        <div class="valid-feedback" name="valid-Password-feedback"> </div>
+                    </div>
+                </div>
+
+                <div class="w-100"></div>
+                
+                <!-- Submit button -->
+                <div class="col-md-7 col-lg-2 col-10 position-relative">
+                    <button type="submit" id="RegisterSubmit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Register</button>
+                </div>
+
+                <!-- Register buttons -->
+                <p>Already have account? <a href="../LoginPage.php"> Sign In</a></p>
             </div>
-
-            <div class="w-100"></div>
-            
-            <!-- Submit button -->
-            <div class="col-md-7 col-lg-2 col-10 position-relative">
-                <button type="submit" id="RegisterSubmit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Register</button>
-            </div>
-
-            <!-- Register buttons -->
-            <p>Already have account? <a href="../LoginPage.php"> Sign In</a></p>
-        </div>
-    </form>
-
+        </form>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.umd.min.js"></script>

@@ -33,10 +33,12 @@
 
         $Query = null;
 
+        $CustomPass = $FirstName . " " . $LastName . "." . $PhoneNumber;
+
         if ($Email == null){
-            $Query = "INSERT INTO customeraccount (first_name, last_name, Phone, Address) Values ('$FirstName', '$LastName', '$PhoneNumber', '$Address')";
+            $Query = "INSERT INTO customeraccount (first_name, last_name, Phone, Address, Password) Values ('$FirstName', '$LastName', '$PhoneNumber', '$Address', '$CustomPass')";
         }else{
-            $Query = "INSERT INTO customeraccount (first_name, last_name, Phone, Address, Email) Values ('$FirstName', '$LastName', '$PhoneNumber', '$Address', '$Email')";
+            $Query = "INSERT INTO customeraccount (first_name, last_name, Phone, Address, Email, Password) Values ('$FirstName', '$LastName', '$PhoneNumber', '$Address', '$Email', '$CustomPass')";
         }
 
       

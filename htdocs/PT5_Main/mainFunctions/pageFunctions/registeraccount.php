@@ -2,6 +2,22 @@
     session_start();
     include '../connection.php';
 
+    $queryEmailCheck = "SELECT * FROM customeraccount";
+
+    $resultQueryCheck = $connection -> query($queryEmailCheck);
+
+    if (isset($_POST['EmailInput'])){
+        if ($_POST['EmailInput'] != null or $_POST['EmailInput'] != ""){
+            while ($row = $resultQueryCheck -> fetch_assoc()){
+                if ($row['Email'] === $_POST['EmailInput']){
+                    $_SESSION['Email_EXIST_ERROR'] = "Email is Already Registered!";
+                    header("Location: ../../LoginPage.php");
+                    exit();
+                }
+            }
+        }
+    }
+
     function ConvertToPhoneNumber($PhoneNumber){
         $ReceivedPhoneNumber = (string)$PhoneNumber;
     
@@ -14,17 +30,14 @@
     
         return $FinalizePhoneNumber;
     }
-
+    
     if ($_SERVER['REQUEST_METHOD'] === "POST"){
         $FirstName = $connection -> real_escape_string($_POST['FirstNameInput']);
         $LastName = $connection -> real_escape_string($_POST['LastNameInput']);
         $PhoneNumber = ConvertToPhoneNumber($_POST['PhoneNumber']);
         $Address = $connection -> real_escape_string($_POST['Location']);
-        $Email = $connection -> real_escape_string($_POST['Email']);
+        $Email = $connection -> real_escape_string($_POST['EmailInput']);
         $userPass = $connection -> real_escape_string($_POST['userPassword']);
-
-        // Used in {Add Another} Button
-        $_SESSION['ErrorAddAgain'] = "Good"; //-- Good State
 
         if ($FirstName == null or $LastName == null or $PhoneNumber == null or $Address == null or $userPass == null){
             $_SESSION['ErrorAdd'] = 'Data Received is empty! Please try Again.';
@@ -44,9 +57,13 @@
         $InsertResult = mysqli_query($connection, $Query);
 
         if ($InsertResult){
+            $_SESSION['CustomNotifyMsg'] = "Account has been Successfully Registered! Please login.";
+            $_SESSION['CustomNotifyMsgHEADER'] = "Registered Successfully!";
             header("Location: ../../LoginPage.php");
             exit;
         }else{
+            $_SESSION['CustomNotifyMsg'] = "Something went wrong. Please try again.";
+            $_SESSION['CustomNotifyMsgHEADER'] = "Register Error";
             header("Location: ../../LoginPage.php");
             exit;
         }

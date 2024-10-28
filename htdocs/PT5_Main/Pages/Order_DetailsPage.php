@@ -4,6 +4,18 @@
     header("Access-Control-Allow-Headers: Content-Type");
 
     session_start();
+
+    // Check any Bypasses or Unauthorized Access
+    if (isset($_SESSION['Login_UserID'])){
+        if (isset($_SESSION['Login_UserType'])){
+            if ($_SESSION['Login_UserType'] != "Admin"){
+                header("Location: ../clientPages/clientHomePage.php");
+            }
+        }
+    }else{
+        header("Location: ../LoginPage.php");
+    }
+
     $IsSideNavOpen = null;
     if (isset($_SESSION['IsSideMenuOpen'])){
         $IsSideNavOpen = $_SESSION['IsSideMenuOpen'];

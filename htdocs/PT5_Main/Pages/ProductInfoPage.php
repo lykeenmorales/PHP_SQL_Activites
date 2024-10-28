@@ -1,5 +1,17 @@
 <?php
     session_start();
+
+    // Check any Bypasses or Unauthorized Access
+    if (isset($_SESSION['Login_UserID'])){
+        if (isset($_SESSION['Login_UserType'])){
+            if ($_SESSION['Login_UserType'] != "Admin"){
+                header("Location: ../clientPages/clientHomePage.php");
+            }
+        }
+    }else{
+        header("Location: ../LoginPage.php");
+    }
+
     $IsSideNavOpen = null;
     $VisibleAllProducts = null;
     if (isset($_SESSION['IsSideMenuOpen'])){

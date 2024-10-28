@@ -1,12 +1,12 @@
 <?php
     session_start();
 
-    if (isset($_SESSION['UserID'])){
-        if (isset($_SESSION['UserType'])){
-            if ($_SESSION['UserType'] == "Admin"){
+    if (isset($_SESSION['Login_UserID'])){
+        if (isset($_SESSION['Login_UserType'])){
+            if ($_SESSION['Login_UserType'] == "Admin"){
                 header("Location: homepage.php");
             }else{
-                header("Location: clientHomePage.php");
+                header("Location: clientPages/clientHomePage.php");
             }
         }
     }
@@ -14,6 +14,7 @@
     include './mainFunctions/connection.php';
 
     unset($_SESSION['ReceivedEmail']);
+    unset($_SESSION['Email']);
     if (isset($_SESSION['ReceivedEmail'])){
         unset($_SESSION['ReceivedEmail']);
     }
@@ -118,6 +119,11 @@
             background-color: #121212 !important; /* Pure black background */
             color: #ffffff !important; /* White text */
         }
+
+        .btn-custom-hover:hover{
+            background-color: rgba(255, 255, 255, 0.2); 
+            transition: background-color 0.2s ease;
+        }
     </style>
 </head>
 <body>
@@ -132,7 +138,7 @@
                 <form action="./mainFunctions/pageFunctions/loginaccount.php" method="post" id="MainForm">
                     <!-- Email input -->
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="email" id="EmailInput" name="EmailInput" class="form-control" required />
+                        <input type="email" id="EmailInput" name="EmailInput" class="form-control" autocomplete="new-email-input" required />
                         <label class="form-label" for="form2Example1">Email address</label>
                         <div class="invalid-feedback" name="invalid-Email-feedback"> </div>
                     </div>
@@ -151,7 +157,7 @@
                             <label class="form-check-label" for="form2Example31"> Remember me </label>
                         </div>
                         <div class="col text-end">
-                            <a href="#!">Forgot password?</a>
+                            <a href="clientPages/changePassPage.php">Forgot password?</a>
                         </div>
                     </div>
 
@@ -159,20 +165,18 @@
                     <button type="Submit" id="SubmitButton" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Sign in</button>
 
                     <!-- Register buttons -->
-                    <p>Not a member? <a href="clientPages/RegisterPage.php">Register</a></p>
+                    <p>Don't have an account?
+                    <a href="clientPages/RegisterPage.php">Register</a></p>
                     <p>or sign up with:</p>
 
                     <div class="d-flex justify-content-center">
-                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-custom-hover btn-link btn-floating mx-2">
                             <i class="fab fa-facebook-f"></i>
                         </button>
-                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-                            <i class="fab fa-google"></i>
-                        </button>
-                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-custom-hover btn-link btn-floating mx-1">
                             <i class="fab fa-twitter"></i>
                         </button>
-                        <button id="google-signin-btn" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                        <button id="google-signin-btn" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-custom-hover btn-link btn-floating mx-2">
                             <i class="fab fa-google"></i>
                         </button>
                     </div>
@@ -183,10 +187,10 @@
     
     <!-- Notify Modal -->
     <div class="modal fade" id="NotifyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-content-custom">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Error: Trying to log in</h5>
+                    <h5 class="modal-title" id="ModalLabel">Error: Trying to log in</h5>
                     <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -229,10 +233,35 @@
             }
         ?>'
 
+        var CustomNotifyMsgHEADER = '<?php
+            if (isset($_SESSION['CustomNotifyMsgHEADER'])){
+                echo $_SESSION['CustomNotifyMsgHEADER'];
+                unset($_SESSION['CustomNotifyMsgHEADER']);
+                unset($_SESSION['ReceivedEmail']);
+            }
+        ?>'
+
+        var CustomNotifyMsg = '<?php
+            if (isset($_SESSION['CustomNotifyMsg'])){
+                echo $_SESSION['CustomNotifyMsg'];
+                unset($_SESSION['CustomNotifyMsg']);
+                unset($_SESSION['ReceivedEmail']);
+            }
+        ?>'
+
         if (Email_EXIST_ERROR != ""){
             var NotifyModal = new mdb.Modal(document.getElementById('NotifyModal'));
 
             document.getElementsByClassName('modal-body')[0].textContent = Email_EXIST_ERROR + " Try logging in with that email.";
+
+            NotifyModal.show();
+        }
+
+        if (CustomNotifyMsg != ""){
+            var NotifyModal = new mdb.Modal(document.getElementById('NotifyModal'));
+
+            document.getElementById('ModalLabel').innerHTML = CustomNotifyMsgHEADER;
+            document.getElementsByClassName('modal-body')[0].textContent = CustomNotifyMsg;
 
             NotifyModal.show();
         }
@@ -347,22 +376,11 @@
 
                 document.getElementsByName("invalid-Email-feedback")[0].textContent = "Input field is Empty!";
             }else{
-                if (!EmailPattern.test(this.value)){
-                    ValidEmail = false;
-                    event.stopPropagation();
-
-                    this.classList.add('is-invalid'); 
-                    this.classList.remove('is-valid'); 
-
-                    document.getElementsByName("invalid-Email-feedback")[0].textContent = "Invalid Email!";
-                }else{
-                    ValidEmail = true;
-                    this.classList.add('is-valid'); 
-                    this.classList.remove('is-invalid'); 
-                }
+                ValidEmail = true;
+                this.classList.add('is-valid'); 
+                this.classList.remove('is-invalid'); 
             }
         }, 250)
-
         // Password Input Detect
         const PasswordInputDetect = debounceTime(function(event){
             // Password Validation
@@ -398,19 +416,9 @@
 
                 document.getElementsByName("invalid-Email-feedback")[0].textContent = "Input field is Empty!";
             }else{
-                if (!EmailPattern.test(EmailInput.value)){
-                    ValidEmail = false;
-                    event.stopPropagation();
-
-                    EmailInput.classList.add('is-invalid'); 
-                    EmailInput.classList.remove('is-valid'); 
-
-                    document.getElementsByName("invalid-Email-feedback")[0].textContent = "Invalid Email!";
-                }else{
-                    ValidEmail = true;
-                    EmailInput.classList.add('is-valid'); 
-                    EmailInput.classList.remove('is-invalid'); 
-                }
+                ValidEmail = true;
+                EmailInput.classList.add('is-valid'); 
+                EmailInput.classList.remove('is-invalid'); 
             }
 
             // Password Validation 
