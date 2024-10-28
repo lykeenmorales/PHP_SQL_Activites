@@ -16,39 +16,38 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] === "POST"){
-        $FirstName = $connection -> real_escape_string($_POST['FirstName']);
-        $LastName = $connection -> real_escape_string($_POST['LastName']);
+        $FirstName = $connection -> real_escape_string($_POST['FirstNameInput']);
+        $LastName = $connection -> real_escape_string($_POST['LastNameInput']);
         $PhoneNumber = ConvertToPhoneNumber($_POST['PhoneNumber']);
-        $Address = $connection -> real_escape_string($_POST['Address']);
-        $Email = $_POST['Email'];
+        $Address = $connection -> real_escape_string($_POST['Location']);
+        $Email = $connection -> real_escape_string($_POST['Email']);
+        $userPass = $connection -> real_escape_string($_POST['userPassword']);
 
         // Used in {Add Another} Button
         $_SESSION['ErrorAddAgain'] = "Good"; //-- Good State
 
-        if ($FirstName == null or $LastName == null or $PhoneNumber == null or $Address == null){
+        if ($FirstName == null or $LastName == null or $PhoneNumber == null or $Address == null or $userPass == null){
             $_SESSION['ErrorAdd'] = 'Data Received is empty! Please try Again.';
-            header("Location: ../../Pages/CustomerPage.php");
+            header("Location: ../../LoginPage.php");
             return;
         }
 
         $Query = null;
 
         if ($Email == null){
-            $Query = "INSERT INTO customeraccount (first_name, last_name, Phone, Address) Values ('$FirstName', '$LastName', '$PhoneNumber', '$Address')";
+            $Query = "INSERT INTO customeraccount (first_name, last_name, Phone, Address, Password) Values ('$FirstName', '$LastName', '$PhoneNumber', '$Address', '$userPass')";
         }else{
-            $Query = "INSERT INTO customeraccount (first_name, last_name, Phone, Address, Email) Values ('$FirstName', '$LastName', '$PhoneNumber', '$Address', '$Email')";
+            $Query = "INSERT INTO customeraccount (first_name, last_name, Phone, Address, Email, Password) Values ('$FirstName', '$LastName', '$PhoneNumber', '$Address', '$Email', '$userPass')";
         }
 
       
         $InsertResult = mysqli_query($connection, $Query);
 
         if ($InsertResult){
-            $_SESSION['SuccessAdd'] = "New Account has been Successfully Added";
-            header("Location: ../../Pages/CustomerPage.php");
+            header("Location: ../../LoginPage.php");
             exit;
         }else{
-           $_SESSION['ErrorAdd'] = 'Data Error: ' . mysqli_error($connection);
-           header("Location: ../../Pages/CustomerPage.php");
+            header("Location: ../../LoginPage.php");
             exit;
         }
     }

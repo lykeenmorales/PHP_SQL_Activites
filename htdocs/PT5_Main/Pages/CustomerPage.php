@@ -79,13 +79,13 @@
                 <i class="bi bi-list"></i>
             </button>
             <h4 class="text-center fs-4 custom-title-text">Stationary Supplies</h4>
-            <a class="text-center custom-Add-link" href="CustomerAdd.php"> Add Customer Account </a>
+            <a class="text-center custom-Add-link" href="CustomerAdd.php"> Add Client Account </a>
         </div>
     </nav>
 
     <!-- Main Content Area -->
     <div class="main-content" id="mainContent">
-        <h5 class="Content_title">Customer Accounts</h5>
+        <h5 class="Content_title">Client Accounts</h5>
 
         <div class="container">
              <!-- Search Bar -->

@@ -61,7 +61,7 @@
 
     <!-- Main Content Area -->
     <div class="main-content" id="mainContent">
-        <h5 class="Content_title">Adding Customer Account</h5>
+        <h5 class="Content_title">Adding Client Account</h5>
 
         <div class="container text-center ">
             <form action="../mainFunctions/pageFunctions/customerInsert.php" method="post" class="row g-4 needs-validation justify-content-md-center" id="MainForm" novalidate>
