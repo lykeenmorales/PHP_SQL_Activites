@@ -1,5 +1,16 @@
 <?php
     session_start();
+    // Check any Bypasses or Unauthorized Access
+    if (isset($_SESSION['Login_UserID'])){
+        if (isset($_SESSION['Login_UserType'])){
+            if ($_SESSION['Login_UserType'] != "Admin"){
+                header("Location: ../clientPages/clientHomePage.php");
+            }
+        }
+    }else{
+        header("Location: LoginPage.php");
+    }
+
     $IsSideNavOpen = null;
     if (isset($_SESSION['IsSideMenuOpen'])){
         $IsSideNavOpen = $_SESSION['IsSideMenuOpen'];
@@ -75,10 +86,18 @@
     <div class="sidebar" id="sidebar">
         <div class="SideBarObjects">
             <ul class="list-unstyled p-3">
+                <li class = "NavigationLinks"> <i class="bi bi-person"></i>  <a href="#" class="text-decoration-none">User Account</a></li>
+
+                <hr>
+
                 <li class = "NavigationLinks"> <i class="bi bi-window"></i>  <a href="#" class="text-decoration-none custom-glow-Current-Page">Dashboard</a></li>
                 <li class = "NavigationLinks"> <i class="bi bi-people"></i>  <a href="Pages/CustomerPage.php" class="text-decoration-none">Client Accounts</a></li>
                 <li class = "NavigationLinks"> <i class="bi bi-box"></i>  <a href="Pages/ProductInfoPage.php" class="text-decoration-none">Products</a></li>
                 <li class = "NavigationLinks"> <i class="bi bi-clipboard"></i>  <a href="Pages/Order_DetailsPage.php" class="text-decoration-none">Order Details</a></li>
+
+                <hr>
+
+                <li class = "NavigationLinks"> <i class="bi-box-arrow-right"></i>  <a href="mainFunctions/pageFunctions/Logout.php" class="text-decoration-none">Logout</a></li>
             </ul>
         </div>
     </div>

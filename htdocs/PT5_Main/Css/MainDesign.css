@@ -98,6 +98,8 @@ a{
     
     overflow-y: auto; 
 
+    text-align: left !important;
+
     transition: left 0.3s ease, transform 0.3s ease;
     z-index: 100;
 }
@@ -114,7 +116,7 @@ a{
 .NavigationLinks, a {
     font-size: 18.5;
     margin-top: 20px;
-    text-align: center;
+    text-align: left;
     align-items: center;
     white-space: nowrap;
     

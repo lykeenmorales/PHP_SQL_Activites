@@ -24,8 +24,11 @@
 
     if (isset($Admin_Acc_Result)){
         if ($Admin_Acc_Result != "" or $Admin_Acc_Result != null){
-            echo "Log in as Admin Account";
-            return;
+            $_SESSION['Login_UserType'] = "Admin";
+            $_SESSION['Login_UserID'] = $Admin_Acc_Result['adminID'];
+
+            header('Location: ../../homepage.php');
+            exit();
         }
     }
 
@@ -40,9 +43,11 @@
             }
 
             // We proceed to login if above condition is not met
-            
-            echo "Log in as Client Account";
+            $_SESSION['Login_UserType'] = "Client";
+            $_SESSION['Login_UserID'] = $Client_Acc_resultArray['customerID'];
 
+            header('Location: ../../clientPages/clientHomePage.php');
+            exit();
         }else{
             $_SESSION['LoginError'] = "Invalid Email or Password";
             header('Location: ../../../PT5_Main/LoginPage.php');

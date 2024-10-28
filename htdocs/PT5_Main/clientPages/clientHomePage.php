@@ -5,7 +5,7 @@
     if (isset($_SESSION['Login_UserID'])){
         if (isset($_SESSION['Login_UserType'])){
             if ($_SESSION['Login_UserType'] == "Admin"){
-                header("Location: ../homepage.php");
+                //header("Location: ../homepage.php");
             }
         }
     }else{
