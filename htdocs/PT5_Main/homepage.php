@@ -18,6 +18,7 @@
         'Display', 
         'ProductStockQuantity'
     ];
+
     foreach($SessionKeysToUnset as $keys){
         if (isset($_SESSION[$keys])){
             unset($_SESSION[$keys]);
@@ -49,10 +50,21 @@
             width: 100% !important;  /* Makes the chart take full width */
         }
 
+        #DepletingStockChart{
+            height: 250px !important; /* You can set this to whatever height you prefer */
+            width: 100% !important;  /* Makes the chart take full width */
+        }
+
         /* Responsive styles for larger screens */
         @media (min-width: 768px) {
             #purchaseChart {
                 height: 300px; /* Adjust height for larger screens */
+            }
+            #TotalSalesChart {
+                height: 300px; /* Adjust height for larger screens */
+            }
+            #DepletingStockChart {
+                height: 350px; /* Adjust height for larger screens */
             }
         }
     </style>
@@ -112,17 +124,7 @@
                             <h4>Depleting Stock Items</h4>
                         </div>
                         <div class="card-body">
-                            <canvas id="purchaseChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mx-auto mt-5">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Depleting Stock Items</h4>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="mainchart"></canvas>
+                            <canvas id="DepletingStockChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -143,8 +145,10 @@
 
         var ctx = document.getElementById('mostPurchaseChart').getContext('2d');
         var ctx2 = document.getElementById('TotalSalesChart').getContext('2d');
+        var ctx3 = document.getElementById('DepletingStockChart').getContext('2d');
         var chart;
         var chart2;
+        var chart3;
 
         const chartColors = [
             'rgba(54, 162, 235, 0.6)',  // Blue
@@ -289,9 +293,66 @@
             });
         }
 
+        function fetchDepletingStockItems(){
+            $.ajax({
+                url: './mainFunctions/pageFunctions/fetch_Depleting_StockItems.php', 
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log('Success:', data); 
+                    
+                    var productName = data.ProductName;
+                    var productQuantity = data.Stocks;
+
+                    if (chart3) {
+                        chart3.destroy();  
+                    }
+
+                    chart3 = new Chart(ctx3, {
+                        type: 'bar',
+                        data: {
+                            labels: productName,
+                            datasets: [{
+                                label: 'Depleting Stock Items',
+                                data: productQuantity,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Date'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Total Sales'
+                                    },
+                                    beginAtZero: true
+                                }
+                            }
+                        },
+                        
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error fetching data: ' + textStatus, errorThrown);
+                    console.log('Response Text:', jqXHR.responseText); // testing log
+                }
+            });
+        }
+
         // First Load
         fetchAndUpdateChart();
         fetchSalesData();
+        fetchDepletingStockItems();
 
         // Refresh Every 100 seconds [UPDATE]
         setInterval(fetchAndUpdateChart, 100000);
