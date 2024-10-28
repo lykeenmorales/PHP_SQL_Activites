@@ -9,8 +9,8 @@
         exit();
     }
 
-    $UserPass = $connection -> real_escape_string($_POST['PasswordInput']);
-    $UserEmail = $connection -> real_escape_string($_POST['EmailInput']);
+    $UserPass = $connection -> real_escape_string(trim($_POST['PasswordInput']));
+    $UserEmail = $connection -> real_escape_string(trim($_POST['EmailInput']));
 
     $Client_account_Query = "SELECT * FROM customeraccount WHERE Email = '".$UserEmail."' AND password = '".$UserPass."'";
     $Admin_account_Query = "SELECT * FROM Administrator WHERE adminName = '".$UserEmail."' AND adminPassword = '".$UserPass."'";
@@ -26,6 +26,7 @@
         if ($Admin_Acc_Result != "" or $Admin_Acc_Result != null){
             $_SESSION['Login_UserType'] = "Admin";
             $_SESSION['Login_UserID'] = $Admin_Acc_Result['adminID'];
+            $_SESSION['Login_UserName'] = $Admin_Acc_Result['adminName'];
 
             header('Location: ../../homepage.php');
             exit();
@@ -44,7 +45,8 @@
 
             // We proceed to login if above condition is not met
             $_SESSION['Login_UserType'] = "Client";
-            $_SESSION['Login_UserID'] = $Client_Acc_resultArray['customerID'];
+            $_SESSION['Login_UserID'] = $Client_Acc_resultArray['CustomerID'];
+            $_SESSION['Login_UserName'] = $Client_Acc_resultArray['first_name'] . " " . $Client_Acc_resultArray['last_name'];
 
             header('Location: ../../clientPages/clientHomePage.php');
             exit();

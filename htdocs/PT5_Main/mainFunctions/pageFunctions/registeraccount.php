@@ -32,12 +32,12 @@
     }
     
     if ($_SERVER['REQUEST_METHOD'] === "POST"){
-        $FirstName = $connection -> real_escape_string($_POST['FirstNameInput']);
-        $LastName = $connection -> real_escape_string($_POST['LastNameInput']);
+        $FirstName = $connection -> real_escape_string(trim($_POST['FirstNameInput']));
+        $LastName = $connection -> real_escape_string(trim($_POST['LastNameInput']));
         $PhoneNumber = ConvertToPhoneNumber($_POST['PhoneNumber']);
         $Address = $connection -> real_escape_string($_POST['Location']);
-        $Email = $connection -> real_escape_string($_POST['EmailInput']);
-        $userPass = $connection -> real_escape_string($_POST['userPassword']);
+        $Email = $connection -> real_escape_string(trim($_POST['EmailInput']));
+        $userPass = $connection -> real_escape_string(trim($_POST['userPassword']));
 
         if ($FirstName == null or $LastName == null or $PhoneNumber == null or $Address == null or $userPass == null){
             $_SESSION['ErrorAdd'] = 'Data Received is empty! Please try Again.';

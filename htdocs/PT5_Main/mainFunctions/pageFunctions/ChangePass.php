@@ -3,11 +3,11 @@
     include '../connection.php';
 
     if (isset($_POST['NewPassword'])){
-        $NewPassword = $connection -> real_escape_string($_POST['NewPassword']);
+        $NewPassword = $connection -> real_escape_string(trim($_POST['NewPassword']));
         $EmailUsed = null;
 
         if (isset($_POST['EmailInput'])){
-            $EmailUsed = $connection -> real_escape_string($_POST['EmailInput']);
+            $EmailUsed = $connection -> real_escape_string(trim($_POST['EmailInput']));
         }else{
             $EmailUsed = $_SESSION["Email"];
         }

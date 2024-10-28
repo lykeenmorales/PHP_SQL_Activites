@@ -5,13 +5,13 @@
     $EmailInput = null;
 
     if (isset($_POST['EmailReceived'])){
-        $EmailInput = $connection -> real_escape_string($_POST['EmailReceived']);
+        $EmailInput = $connection -> real_escape_string(trim($_POST['EmailReceived']));
     }else{
         if (isset($_SESSION['Email'])){
-            $EmailInput = $_SESSION['Email'];
+            $EmailInput = trim($_SESSION['Email']);
         }
     }
-    
+
     if ($EmailInput != null){
         $query = "SELECT * FROM customeraccount WHERE Email = '".$EmailInput."'";
 

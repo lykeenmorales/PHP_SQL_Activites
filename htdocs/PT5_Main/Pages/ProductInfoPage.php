@@ -91,10 +91,18 @@
     <div class="sidebar" id="sidebar">
         <div class="SideBarObjects">
             <ul class="list-unstyled p-3">
+                <li class = "NavigationLinks"> Account: <div class="userCustomNameTEXT"><?php echo $_SESSION['Login_UserName']; ?></div> </li>
+
+                <hr>
+
                 <li class = "NavigationLinks"> <i class="bi bi-window"></i>  <a href="../homepage.php" class="text-decoration-none">Dashboard</a></li>
                 <li class = "NavigationLinks"> <i class="bi bi-people"></i>  <a href="CustomerPage.php" class="text-decoration-none">Client Accounts</a></li>
                 <li class = "NavigationLinks"> <i class="bi bi-box"></i>  <a href="#" class="text-decoration-none custom-glow-Current-Page">Products</a></li>
                 <li class = "NavigationLinks"> <i class="bi bi-clipboard"></i>  <a href="Order_DetailsPage.php" class="text-decoration-none">Order Details</a></li>
+
+                <hr>
+
+                <li class = "NavigationLinks"> <i class="bi-box-arrow-right"></i>  <a href="../mainFunctions/pageFunctions/Logout.php" class="text-decoration-none">Logout</a></li>
             </ul>
         </div>
     </div>

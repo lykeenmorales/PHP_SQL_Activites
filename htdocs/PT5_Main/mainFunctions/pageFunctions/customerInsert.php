@@ -16,11 +16,11 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] === "POST"){
-        $FirstName = $connection -> real_escape_string($_POST['FirstName']);
-        $LastName = $connection -> real_escape_string($_POST['LastName']);
+        $FirstName = $connection -> real_escape_string(trim($_POST['FirstName']));
+        $LastName = $connection -> real_escape_string(trim($_POST['LastName']));
         $PhoneNumber = ConvertToPhoneNumber($_POST['PhoneNumber']);
         $Address = $connection -> real_escape_string($_POST['Address']);
-        $Email = $_POST['Email'];
+        $Email = $connection -> real_escape_string(trim($_POST['Email']));
 
         // Used in {Add Another} Button
         $_SESSION['ErrorAddAgain'] = "Good"; //-- Good State
@@ -33,7 +33,7 @@
 
         $Query = null;
 
-        $CustomPass = $FirstName . " " . $LastName . "." . $PhoneNumber;
+        $CustomPass = $FirstName . $LastName . "." . $PhoneNumber;
 
         if ($Email == null){
             $Query = "INSERT INTO customeraccount (first_name, last_name, Phone, Address, Password) Values ('$FirstName', '$LastName', '$PhoneNumber', '$Address', '$CustomPass')";

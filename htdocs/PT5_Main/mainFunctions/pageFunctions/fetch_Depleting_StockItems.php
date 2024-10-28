@@ -3,7 +3,7 @@
     include '../connection.php'; // Replace with your actual connection file
 
 
-    $sql = "SELECT Name, StockQuantity from products where StockQuantity < 250 LIMIT 10";
+    $sql = "SELECT Name, StockQuantity from products where StockQuantity < 1000 LIMIT 10";
 
 
     $result = $connection -> query($sql);

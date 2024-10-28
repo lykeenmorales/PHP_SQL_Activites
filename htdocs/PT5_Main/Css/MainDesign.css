@@ -112,6 +112,10 @@ a{
     left: 0; /* Slide in */
 }
 
+.userCustomNameTEXT{
+    font-weight: bold;
+}
+
 /* Custom CSS for link effects */
 .NavigationLinks, a {
     font-size: 18.5;

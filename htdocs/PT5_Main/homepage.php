@@ -1,10 +1,12 @@
 <?php
     session_start();
+    include 'mainFunctions/connection.php';
+
     // Check any Bypasses or Unauthorized Access
     if (isset($_SESSION['Login_UserID'])){
         if (isset($_SESSION['Login_UserType'])){
             if ($_SESSION['Login_UserType'] != "Admin"){
-                header("Location: ../clientPages/clientHomePage.php");
+                header("Location: clientPages/clientHomePage.php");
             }
         }
     }else{
@@ -35,6 +37,37 @@
             unset($_SESSION[$keys]);
         }
     }
+
+    // Queries
+    $Todays_TotalPrice_Purchases_Query = "SELECT SUM(totalPrice) as total_price FROM orders WHERE CurrDate = CURDATE()";
+    $Previous_TotalPrice_Query = "SELECT SUM(totalPrice) as total_price FROM orders WHERE CurrDate >= CURDATE() - INTERVAL 10 DAY";
+
+    // Calculations
+    $Today_TotalPrice_Result = $connection -> query($Todays_TotalPrice_Purchases_Query);
+    $TodaysPrice = $Today_TotalPrice_Result -> fetch_assoc()['total_price'];
+
+    $Previous_TotalPrice_Result = $connection -> query($Previous_TotalPrice_Query);
+    $Previous_Price = $Previous_TotalPrice_Result -> fetch_assoc()['total_price'];
+    $percentage_change = (($TodaysPrice - $Previous_Price) / $Previous_Price) * 100;
+
+    // Formatting
+    $FormattedTodaysPrice;
+    $FinalPercentageValue;
+    $IsNegativePercent_TodayValue = false;
+    if ($percentage_change > 0){
+        $FinalPercentageValue = "+" . number_format($percentage_change, 2) . "%";
+    }else if ($percentage_change < 0){
+        $IsNegativePercent_TodayValue = true;
+        $FinalPercentageValue = "-" . number_format(abs($percentage_change), 2) . "%";
+    }
+    
+    if ($TodaysPrice > 1000){
+        $FormattedTodaysPrice = '₱' . number_format($TodaysPrice / 1000, 2) . 'k';
+    }else{
+        $FormattedTodaysPrice = '₱' . $TodaysPrice;
+    }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -78,6 +111,13 @@
                 height: 350px; /* Adjust height for larger screens */
             }
         }
+
+        .custom-text-color-Negative{
+            color: red !important;
+        }
+        .custom-text-color-Positive{
+            color: green !important;
+        }
     </style>
 </head>
 <body>       
@@ -86,7 +126,7 @@
     <div class="sidebar" id="sidebar">
         <div class="SideBarObjects">
             <ul class="list-unstyled p-3">
-                <li class = "NavigationLinks"> <i class="bi bi-person"></i>  <a href="#" class="text-decoration-none">User Account</a></li>
+                <li class = "NavigationLinks"> Account: <div class="userCustomNameTEXT"><?php echo $_SESSION['Login_UserName']; ?></div> </li>
 
                 <hr>
 
@@ -114,11 +154,80 @@
     <!-- Main Content Area -->
     <div class="main-content" id="mainContent">
         <div class="container justify-content-md-center text-center">
+
+            <div class="row mb-5 justify-content-center">
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-header p-2 ps-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="text-sm mb-0 text-capitalize">Today's Money</p>
+                                    <h4 class="mb-0"><?php echo $FormattedTodaysPrice; ?></h4>
+                                </div>
+                                <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark text-center border-radius-lg">
+                                    <i class="bi bi-cash opacity-10"></i> <!-- Bootstrap icon for cash -->
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="dark horizontal my-0">
+                        <div class="card-footer p-2 ps-3">
+                            <?php
+                                if ($IsNegativePercent_TodayValue == true){
+                                    echo '<p class="mb-0 text-sm"><span class="text-success custom-text-color-Negative font-weight-bolder">' . $FinalPercentageValue .'</span>than last week</p>';
+                                }else{
+                                    echo '<p class="mb-0 text-sm"><span class="text-success custom-text-color-Positive font-weight-bolder">'. $FinalPercentageValue .'</span>than last week</p>';
+                                }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card">
+                        <div class="card-header p-2 ps-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="text-sm mb-0 text-capitalize">Today's Users</p>
+                                    <h4 class="mb-0">2300</h4>
+                                </div>
+                                <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark text-center border-radius-lg">
+                                    <i class="bi bi-person-fill opacity-10"></i> <!-- Bootstrap icon for user -->
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="dark horizontal my-0">
+                        <div class="card-footer p-2 ps-3">
+                            <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+3% </span>than last month</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card">
+                        <div class="card-header p-2 ps-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <p class="text-sm mb-0 text-capitalize">Sales</p>
+                                    <h4 class="mb-0">$103,430</h4>
+                                </div>
+                                <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark text-center border-radius-lg">
+                                    <i class="bi bi-cash-stack opacity-10"></i> <!-- Bootstrap icon for sales -->
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="dark horizontal my-0">
+                        <div class="card-footer p-2 ps-3">
+                            <p class="mb-0 text-sm"><span class="text-success font-weight-bolder">+5% </span>than yesterday</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-lg-4 mx-auto">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Top 5 Most Purchased Products</h4>
+                            <h4>Most Purchased Products</h4>
                         </div>
                         <div class="card-body">
                             <canvas id="mostPurchaseChart"></canvas>
@@ -132,18 +241,6 @@
                         </div>
                         <div class="card-body">
                             <canvas id="TotalSalesChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-end">
-                <div class="col-lg-4 mx-auto mt-5">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Depleting Stock Items</h4>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="DepletingStockChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -164,10 +261,8 @@
 
         var ctx = document.getElementById('mostPurchaseChart').getContext('2d');
         var ctx2 = document.getElementById('TotalSalesChart').getContext('2d');
-        var ctx3 = document.getElementById('DepletingStockChart').getContext('2d');
         var chart;
         var chart2;
-        var chart3;
 
         const chartColors = [
             'rgba(54, 162, 235, 0.6)',  // Blue
@@ -312,69 +407,9 @@
             });
         }
 
-        function fetchDepletingStockItems(){
-            $.ajax({
-                url: './mainFunctions/pageFunctions/fetch_Depleting_StockItems.php', 
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    console.log('Success:', data); 
-                    
-                    var productName = data.ProductName;
-                    var productQuantity = data.Stocks;
-
-                    if (chart3) {
-                        chart3.destroy();  
-                    }
-
-                    chart3 = new Chart(ctx3, {
-                        type: 'bar',
-                        data: {
-                            labels: productName,
-                            datasets: [{
-                                label: 'Depleting Stock Items',
-                                data: productQuantity,
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                x: {
-                                    title: {
-                                        display: true,
-                                        text: 'Date'
-                                    }
-                                },
-                                y: {
-                                    title: {
-                                        display: true,
-                                        text: 'Total Sales'
-                                    },
-                                    beginAtZero: true
-                                }
-                            }
-                        },
-                        
-                    });
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Error fetching data: ' + textStatus, errorThrown);
-                    console.log('Response Text:', jqXHR.responseText); // testing log
-                }
-            });
-        }
-
         // First Load
         fetchAndUpdateChart();
         fetchSalesData();
-        fetchDepletingStockItems();
-
-        // Refresh Every 100 seconds [UPDATE]
-        setInterval(fetchAndUpdateChart, 100000);
     </script>
 </body>
 </html>
