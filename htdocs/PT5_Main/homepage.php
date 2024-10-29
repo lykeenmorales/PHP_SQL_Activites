@@ -67,7 +67,12 @@
         $FormattedTodaysPrice = '₱' . $TodaysPrice;
     }
 
-
+    if ($FormattedTodaysPrice == "" || $FormattedTodaysPrice < 0){
+        $FormattedTodaysPrice = "0.00";
+    }
+    if ($FinalPercentageValue == "" || $FinalPercentageValue <= (-100)){
+        $FinalPercentageValue = "0.00%";
+    }
 ?>
 
 <!DOCTYPE html>
