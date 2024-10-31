@@ -38,7 +38,7 @@
             // This will allow the user to Change their password if the administrator created their account
             if ($Client_Acc_resultArray['password'] == $Client_Acc_resultArray['first_name'] . " " . $Client_Acc_resultArray['last_name'] . "." . $Client_Acc_resultArray['Phone'] || $Client_Acc_resultArray['password'] == "testpass"){
                 $_SESSION['Email'] = $Client_Acc_resultArray['Email'];
-
+                
                 header('Location: ../../clientPages/changePassPage.php');
                 exit();
             }
@@ -47,6 +47,15 @@
             $_SESSION['Login_UserType'] = "Client";
             $_SESSION['Login_UserID'] = $Client_Acc_resultArray['CustomerID'];
             $_SESSION['Login_UserName'] = $Client_Acc_resultArray['first_name'] . " " . $Client_Acc_resultArray['last_name'];
+
+            // If Remembered Button is True we set the email automatically when logout on the login form
+            if (isset($_SESSION['IsRememberEnabled'])){
+                if ($_SESSION['IsRememberEnabled'] == true){
+                    $_SESSION['RememberedEmail'] = $Client_Acc_resultArray['Email'];
+                }
+            }else{
+                unset($_SESSION['RememberedEmail']);
+            }
 
             header('Location: ../../clientPages/clientHomePage.php');
             exit();

@@ -64,12 +64,13 @@
     if ($TodaysPrice > 1000){
         $FormattedTodaysPrice = '₱' . number_format($TodaysPrice / 1000, 2) . 'k';
     }else{
-        $FormattedTodaysPrice = '₱' . $TodaysPrice;
+        if ($TodaysPrice == ""){
+            $FormattedTodaysPrice = '₱0.00';
+        }else{
+            $FormattedTodaysPrice = '₱' . number_format($TodaysPrice, 2);
+        }
     }
 
-    if ($FormattedTodaysPrice == "" || $FormattedTodaysPrice < 0){
-        $FormattedTodaysPrice = "0.00";
-    }
     if ($FinalPercentageValue == "" || $FinalPercentageValue <= (-100)){
         $FinalPercentageValue = "0.00%";
     }

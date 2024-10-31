@@ -15,10 +15,18 @@
 
     unset($_SESSION['ReceivedEmail']);
     unset($_SESSION['Email']);
+    unset($_SESSION['IsRememberEnabled']);
     if (isset($_SESSION['ReceivedEmail'])){
         unset($_SESSION['ReceivedEmail']);
     }
 
+    $RememberedEmailInput = null;
+
+    if (isset($_SESSION['RememberedEmail'])){
+        if ($_SESSION['RememberedEmail'] != "" or $_SESSION['RememberedEmail'] != null){
+            $RememberedEmailInput = $_SESSION['RememberedEmail'];
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -138,7 +146,7 @@
                 <form action="./mainFunctions/pageFunctions/loginaccount.php" method="post" id="MainForm">
                     <!-- Email input -->
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="email" id="EmailInput" name="EmailInput" class="form-control" autocomplete="new-email-input" required />
+                        <input type="email" id="EmailInput" name="EmailInput" class="form-control" autocomplete="new-email-input" value='<?php echo $RememberedEmailInput; ?>' required />
                         <label class="form-label" for="form2Example1">Email address</label>
                         <div class="invalid-feedback" name="invalid-Email-feedback"> </div>
                     </div>
@@ -153,7 +161,7 @@
                     <!-- Checkbox and link -->
                     <div class="row mb-4">
                         <div class="col d-flex align-items-center justify-content-start">
-                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example31" checked />
+                            <input class="form-check-input me-2" type="checkbox" value="" id="RememberMeButton" />
                             <label class="form-check-label" for="form2Example31"> Remember me </label>
                         </div>
                         <div class="col text-end">
@@ -214,6 +222,7 @@
         const EmailInput = document.getElementById('EmailInput');
         const SubmitButton = document.getElementById('SubmitButton');
         const MainForm = document.getElementById('MainForm');
+        const RememberMeBtn = document.getElementById('RememberMeButton');
 
         const EmailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
@@ -283,6 +292,20 @@
                 new mdb.Input(formOutline).update();
             });
         });
+
+        RememberMeBtn.addEventListener('click', function(){
+            $.ajax({
+                url: './mainFunctions/pageFunctions/Rememberme.php',
+                type: 'POST',
+                data: { IsEnabled: RememberMeBtn.checked },
+                success: function(response) {
+                    console.log('Response from server:', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', error);
+                }
+            });
+        })
 
         function handleCredentialResponse(response) {
             const id_token = response.credential;
