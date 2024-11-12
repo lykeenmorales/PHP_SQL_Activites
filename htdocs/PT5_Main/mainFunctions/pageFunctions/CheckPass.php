@@ -23,7 +23,7 @@
         $result = $connection -> query($query);
         
         if ($result -> num_rows > 0){
-            echo "Password is Same as Previous!";
+            echo "Password is Same as Previous One!";
         }
     }
 

@@ -40,7 +40,9 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <link rel="stylesheet" href="../Css/MainDesign.css">
     <style>
         .custom-warning-text{
@@ -62,6 +64,10 @@
                 <li class = "NavigationLinks"> <i class="bi bi-people"></i>  <a href="CustomerPage.php" class="">Client Accounts</a></li>
                 <li class = "NavigationLinks"> <i class="bi bi-box"></i>  <a href="ProductInfoPage.php" class="">Products</a></li>
                 <li class = "NavigationLinks"> <i class="bi bi-clipboard"></i>  <a href="Order_DetailsPage.php" class="">Order Details</a></li>
+
+                <hr>
+
+                <li class = "NavigationLinks"> <i class="fas fa-eye"></i>  <a href="../clientPages/clientHomePage.php" class="text-decoration-none">View Client Page</a></li>
 
                 <hr>
 
@@ -100,13 +106,13 @@
                     </div>
                 </div>
 
-                <div class="row justify-content-md-center text-center mt-2">
-                    <div class="col-md-3 position-relative">
+                <div class="row justify-content-md-center text-center">
+                    <div class="col-md-3 position-relative mt-5">
                         <label for="validationTooltip02" class="form-label">Phone</label>
                         <input type="number" class="form-control" id="PhoneInput" value="" name="PhoneNumber" placeholder="Enter phone number" min="0" maxlength="11" required>
                         <div class="invalid-tooltip" name="PhoneInputFeedback"></div>
                     </div>
-                    <div class="col-md-3 position-relative">
+                    <div class="col-md-3 position-relative mt-5">
                         <label for="validationTooltip01" class="form-label">Email</label>
                         <input type="text" class="form-control" id="EmailInput" value="" name="Email" placeholder="Enter email" autocomplete="on" required>
                         <div class="invalid-tooltip" name = "EmailInputFeedback">
@@ -115,8 +121,8 @@
                     </div>
                 </div>
 
-                <div class="row justify-content-md-center text-center mt-2">
-                    <div class="col-md-4 position-relative">
+                <div class="row justify-content-md-center text-center">
+                    <div class="col-md-4 position-relative mt-5">
                         <label for="validationTooltip01" class="form-label">Address</label>
                         <input type="text" class="form-control" id="AddressInput" value="" name="Address" placeholder="Enter Address" autocomplete="on" required>
                         <div class="invalid-tooltip" name = "AddressInputFeedback">
@@ -179,11 +185,12 @@
         SubmitButton.addEventListener('click', ValidateSubmit);
 
         PhoneNumberInput.addEventListener('input', function(){
-            const inputValue = this.value.replace(/\D/g, ''); // This keeps only digits
-            if (inputValue.length > 11) {
-                this.value = inputValue.slice(0, 11); // Limit to 11 digits
-            } else {
-                this.value = inputValue; // Allow valid input
+            // Remove any non-numeric characters
+            this.value = this.value.replace(/[^0-9]/g, '');
+
+            // Limit to 11 characters
+            if (this.value.length > 11) {
+                this.value = this.value.slice(0, 11);
             }
         })
 

@@ -33,7 +33,7 @@
 
         $Query = null;
 
-        $CustomPass = $FirstName . $LastName . "." . $PhoneNumber;
+        $CustomPass = $FirstName . $LastName . "@!" . uniqid();
 
         if ($Email == null){
             $Query = "INSERT INTO customeraccount (first_name, last_name, Phone, Address, Password) Values ('$FirstName', '$LastName', '$PhoneNumber', '$Address', '$CustomPass')";

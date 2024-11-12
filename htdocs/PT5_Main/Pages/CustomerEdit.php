@@ -64,7 +64,9 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <link rel="stylesheet" href="../Css/MainDesign.css">
     <style>
         .custom-warning-text{
@@ -89,6 +91,10 @@
 
                 <hr>
 
+                <li class = "NavigationLinks"> <i class="fas fa-eye"></i>  <a href="../clientPages/clientHomePage.php" class="text-decoration-none">View Client Page</a></li>
+
+                <hr>
+
                 <li class = "NavigationLinks"> <i class="bi-box-arrow-right"></i>  <a href="../mainFunctions/pageFunctions/Logout.php" class="text-decoration-none">Logout</a></li>
             </ul>
         </div>
@@ -110,12 +116,12 @@
         <div class="container text-center ">
             <form action="../mainFunctions/pageFunctions/UpdateData.php" method="post" class="row g-4 needs-validation justify-content-md-center" id="MainForm" novalidate>
                 <div class="row justify-content-md-center text-center">
-                    <div class="col-md-4 position-relative">
+                    <div class="col-md-4 position-relative mt-5">
                         <label for="validationTooltip01" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="FirstNameInput" value="<?php echo htmlspecialchars($_SESSION['FirstName']); ?>" name="FirstName" placeholder="Enter first name" required>
                         <div class="invalid-tooltip" name = "FirstNameInputFeedback"></div>
                     </div>
-                    <div class="col-md-4 position-relative">
+                    <div class="col-md-4 position-relative mt-5">
                         <label for="validationTooltip01" class="form-label">Last Name</label>
                         <input type="text" class="form-control" id="LastNameInput" value="<?php echo htmlspecialchars($_SESSION['LastName']); ?>" name="LastName" placeholder="Enter last name" required>
                         <div class="invalid-tooltip" name = "LastNameInputFeedback">
@@ -124,20 +130,20 @@
                     </div>
                 </div>
 
-                <div class="row justify-content-md-center text-center mt-2">
-                    <div class="col-md-3 position-relative">
+                <div class="row justify-content-md-center text-center">
+                    <div class="col-md-3 position-relative mt-5">
                         <label for="validationTooltip02" class="form-label">Phone</label>
                         <input type="number" class="form-control" id="PhoneInput" value="<?php echo htmlspecialchars(ConvertNumber()); ?>" name="PhoneNumber" placeholder="Enter phone number" min="0" required>
                         <div class="invalid-tooltip" name="PhoneInputFeedback"></div>
                     </div>
-                    <div class="col-md-3 position-relative">
+                    <div class="col-md-3 position-relative mt-5">
                         <label for="validationTooltip01" class="form-label">Email</label>
                         <input type="text" class="form-control" id="EmailInput" value="<?php if ($_SESSION['Email'] != null){echo htmlspecialchars($_SESSION['Email']);} ?>" name="Email" placeholder="Enter email" autocomplete="on" required>
                         <div class="invalid-tooltip" name = "EmailInputFeedback"></div>
                     </div>
                 </div>
 
-                <div class="row justify-content-md-center text-center mt-2">
+                <div class="row justify-content-md-center text-center mt-5">
                     <div class="col-md-4 position-relative">
                         <label for="validationTooltip01" class="form-label">Address</label>
                         <input type="text" class="form-control" id="AddressInput" value="<?php echo htmlspecialchars($_SESSION['Address']); ?>" name="Address" placeholder="Enter Address" autocomplete="on" required>
@@ -218,8 +224,8 @@
 
         const TypeOfUpdate = document.createElement("input");
         TypeOfUpdate.type = "hidden";
-        TypeOfUpdate.name = "TypeOfUpdate"
-        TypeOfUpdate.value = "CustomerUpdate"
+        TypeOfUpdate.name = "TypeOfUpdate";
+        TypeOfUpdate.value = "CustomerUpdate";
 
         MainForm.appendChild(TypeOfUpdate);
 
@@ -230,8 +236,12 @@
         DeleteButton.addEventListener('click', DeleteAccount);
 
         PhoneNumberInput.addEventListener('input', function(){
-            if (PhoneNumberInput.value.length > 11){
-                this.value = this.value.slice(0, 11)
+            // Remove any non-numeric characters
+            this.value = this.value.replace(/[^0-9]/g, '');
+
+            // Limit to 11 characters
+            if (this.value.length > 11) {
+                this.value = this.value.slice(0, 11);
             }
         })
 

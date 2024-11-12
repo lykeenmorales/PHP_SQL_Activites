@@ -185,7 +185,7 @@
                 if (EmailInput.value != ""){
                     FinalEmaiLValue = EmailInput.value;
                 }
-        }, 50));
+            }, 50));
         }else{
             FinalEmaiLValue = DefaultEmailInput;
         }
@@ -369,12 +369,7 @@
                 }
             }
 
-            console.log('ValidEmail:', ValidEmail);
-            console.log('ValidPassword:', ValidPassword);
-            console.log('RecheckPass:', RecheckPass);
-
             if (ValidEmail == true && ValidPassword == true && RecheckPass == true){
-                console.log("SUBMITT");
                 document.getElementById('MainForm').submit();
             }
         });

@@ -57,6 +57,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <link rel="stylesheet" href="../Css/MainDesign.css">
 
@@ -102,6 +104,10 @@
 
                 <hr>
 
+                <li class = "NavigationLinks"> <i class="fas fa-eye"></i>  <a href="../clientPages/clientHomePage.php" class="text-decoration-none">View Client Page</a></li>
+
+                <hr>
+
                 <li class = "NavigationLinks"> <i class="bi-box-arrow-right"></i>  <a href="../mainFunctions/pageFunctions/Logout.php" class="text-decoration-none">Logout</a></li>
             </ul>
         </div>
@@ -139,11 +145,12 @@
                 <table class="table caption-top align-middle table-hover table-dark table-bordered table-sm">
                     <thead>
                         <tr>
-                            <th>Product Name</th>
-                            <th>Price</th>
-                            <th>Description</th>
-                            <th>Stocks</th>
-                            <th>Pack Size</th>
+                            <th class="col-2">Product Name</th>
+                            <th class="col-1">Price</th>
+                            <th class="col-3">Description</th>
+                            <th class="col-1">Stocks</th>
+                            <th class="col-1">Pack Size</th>
+                            <th class="col-1">Featured</th>
                         </tr>
                     </thead>
 

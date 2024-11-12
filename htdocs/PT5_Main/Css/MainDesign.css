@@ -140,7 +140,7 @@ a{
 .NavigationLinks a:hover {
     background-color: #495057;
 
-    font-size: 1.25em;
+    font-size: 1.1em;
 
     transition: font-size 0.15s ease-in-out;
 }
@@ -156,7 +156,7 @@ table {
     border-collapse: collapse;
     background-color: #2d2d2d; /* Dark background for table */
     color: #ffffff !important; /* Light text color */
-    font-size: 1rem;
+    font-size: 0.95rem;
 
     text-align: center;
 }
@@ -166,11 +166,14 @@ thead th {
     background-color: #343a40; 
     color: #ffffffd3 !important;
     font-weight: bold;
-    padding: 15px 4px !important;
     border-bottom: 2px solid #6c757d;
+
+    padding: 14px 12px !important;
 
     text-align: center;
     align-items: center;
+
+    padding-bottom: 15px;
 }
 
 /* Hide arrows in Chrome, Safari, Edge, and Opera */
@@ -183,9 +186,14 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* Table body styling */
 tbody td {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
     color: #ffffffd3 !important;
-    padding: 5px 15px !important;
     border-bottom: 1px solid #6c757d;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 tbody tr:nth-child(even) {

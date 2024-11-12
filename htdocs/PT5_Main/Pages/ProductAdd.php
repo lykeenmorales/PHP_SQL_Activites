@@ -28,12 +28,40 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <link rel="stylesheet" href="../Css/MainDesign.css">
 
     <style>
-         .no-resize {
+        .modal-content-custom {
+            background-color: #121212 !important; /* Pure black background */
+            color: #ffffff !important; /* White text */
+        }
+        .no-resize {
             resize: none;
+        }
+        .btn-custom {
+            background-color: #ffffffc4; /* Match background color with your submit buttons */
+            color: #000000e7; /* Text color for contrast */
+            border: 2px solid transparent; /* Border to match the design */
+            border-radius: 8px; /* Rounded corners for consistency */
+            padding: 0.5rem 1rem; /* Padding for a better appearance */
+            font-size: 15px; /* Font size for readability */
+            transition: background-color 0.2s ease, color 0.2s ease; /* Smooth transition for hover effects */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+
+        .btn-custom:hover {
+            background-color: #3c4043be; /* Darker background on hover */
+            color: #ffffffd3; /* Change text color on hover */
+            border-color: #3c4043; /* Border color on hover for emphasis */
+        }
+
+        #fileName {
+            margin-top: 0.5rem; /* Space above the file name display */
+            font-size: 0.9rem; /* Font size for the file name */
+            color: #6c757d; /* Placeholder text color */
         }
     </style>
 </head>
@@ -51,6 +79,10 @@
                 <li class = "NavigationLinks"> <i class="bi bi-people"></i>  <a href="CustomerPage.php" class="">Client Accounts</a></li>
                 <li class = "NavigationLinks"> <i class="bi bi-box"></i>  <a href="ProductInfoPage.php" class="">Products</a></li>
                 <li class = "NavigationLinks"> <i class="bi bi-clipboard"></i>  <a href="Order_DetailsPage.php" class="">Order Details</a></li>
+
+                <hr>
+
+                <li class = "NavigationLinks"> <i class="fas fa-eye"></i> <a href="../clientPages/clientHomePage.php" class="text-decoration-none">View Client Page</a></li>
 
                 <hr>
 
@@ -73,7 +105,7 @@
         <h5 class="Content_title">Adding Product</h5>
     
         <div class="container text-center ">
-            <form action="../mainFunctions/pageFunctions/productInsert.php" method="post" class="row g-4 needs-validation justify-content-md-center" id="MainForm" novalidate>
+            <form action="../mainFunctions/pageFunctions/productInsert.php" method="post" enctype="multipart/form-data" class="row g-4 needs-validation justify-content-md-center" id="MainForm" novalidate>
                 <div class="row justify-content-md-center text-center">
                     <div class="col-md-3 position-relative">
                         <label for="validationTooltip01" class="form-label">Product Name</label>
@@ -82,14 +114,17 @@
                            
                         </div>
                     </div>
-                    <div class="col-md-3 position-relative">
+                </div>
+
+                <div class="row justify-content-md-center text-center">
+                    <div class="col-md-3 position-relative mt-5">
                         <label for="validationTooltip02" class="form-label">Price</label>
                         <input type="number" class="form-control" id="productPriceInput" value="" name="ProductPrice" placeholder="price" min="1" step=".01" required>
                         <div class="invalid-tooltip" name="ProductPriceFeedback">
                            
                         </div>
                     </div>
-                    <div class="col-md-3 position-relative">
+                    <div class="col-md-3 position-relative mt-5">
                         <label for="validationTooltip03" class="form-label">Quantity</label>
                         <input type="number" class="form-control" id="productQuantityInput" value="" name="ProductQuant" placeholder="quantity" min="0" step="1" required>
                         <div class="invalid-tooltip" name="ProductQuantityFeedback">
@@ -98,7 +133,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 position-relative mt-2">
+                <div class="col-md-4 position-relative mt-5">
                     <label for="validationTooltip04" class="form-label">Description</label>
                     <textarea class="form-control no-resize" id="productDescriptionInput" rows="4" name="ProductDesc" placeholder="description about the product..." required></textarea>
                     <div class="invalid-tooltip" name="ProductDescFeedback">
@@ -106,10 +141,22 @@
                     </div>
                 </div>
 
+                <div class="row justify-content-md-center text-center">
+                    <div class="col-md-3 position-relative mt-5">
+                        <input data-bs-toggle="tooltip" data-bs-title="If checked will display in Products Page." class="form-check-input me-2" type="checkbox" value="" id="check2" name="DisplayProduct">
+                        <label class="form-check-label" for="check2"> Display Product </label>
+                        &nbsp; &nbsp;
+                        <input data-bs-toggle="tooltip" data-bs-title="If checked will be featured in Home Page." class="form-check-input me-2" type="checkbox" value="" id="check3" name="FeaturedProduct">
+                        <label class="form-check-label" for="check3"> Featured </label>
+                    </div>
+                </div>
+
                 <div class="row justify-content-md-center text-center mt-3">
                     <div class="col-md-3 position-relative">
-                        <input data-bs-toggle="tooltip" data-bs-title="If checked will display in page." class="form-check-input me-2" type="checkbox" value="" id="check2" name="DisplayProduct">
-                        <label class="form-check-label" for="check2"> Display Product </label>
+                        <input type="file" id="fileInput" name="profile-photo" style="display: none;" accept=".png, .jpg, .jpeg">
+                        <label for="fileInput" class="btn btn-custom btn-custom-profile mt-3">Upload Photo</label>
+
+                        <div id="fileName" class="mt-3"></div>
                     </div>
                 </div>
 
@@ -120,7 +167,26 @@
         </div>
     </div>
 
+    <!-- Notify Modal 2 -->
+    <div class="modal fade" id="NotifyModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mainModalLabel">Error: Trying to log in</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body mainmodalbody">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
@@ -175,6 +241,37 @@
         const productDescription = document.getElementById('productDescriptionInput');
         const CheckDisplayButton = document.getElementById('check2');
 
+        const FileName_Element = document.getElementById('fileName');
+        const UploadProductPic_btn = document.getElementById('fileInput');
+        // Settings for Png Uploads
+        const MAX_FILE_SIZE = 1 * 1024 * 1024;
+
+        // Update Notifies
+        var CustomNotifyMsgHEADER = '<?php
+            if (isset($_SESSION['CustomNotifyMsgHEADER'])){
+                echo $_SESSION['CustomNotifyMsgHEADER'];
+                unset($_SESSION['CustomNotifyMsgHEADER']);
+                unset($_SESSION['ReceivedEmail']);
+            }
+        ?>'
+
+        var CustomNotifyMsg = '<?php
+            if (isset($_SESSION['CustomNotifyMsg'])){
+                echo $_SESSION['CustomNotifyMsg'];
+                unset($_SESSION['CustomNotifyMsg']);
+                unset($_SESSION['ReceivedEmail']);
+            }
+        ?>'
+
+        if (CustomNotifyMsg != ""){
+            var NotifyModal2 = new mdb.Modal(document.getElementById('NotifyModal2'));
+
+            document.getElementById('mainModalLabel').innerHTML = CustomNotifyMsgHEADER;
+            document.getElementsByClassName('mainmodalbody')[0].textContent = CustomNotifyMsg;
+
+            NotifyModal2.show();
+        }
+
         SubmitButton.addEventListener('click', ValidateSubmit);
 
         // This will activate the tooltips
@@ -184,6 +281,30 @@
         CheckDisplayButton.addEventListener('click', function(){
             CheckDisplayButton.blur();
         })
+
+        UploadProductPic_btn.addEventListener('change', function(event){
+            const file = event.target.files[0];
+
+            if (file){
+                if (file.size > MAX_FILE_SIZE){
+                    // Notify Modal Here
+                    var NotifyModal2 = new mdb.Modal(document.getElementById('NotifyModal2'));
+
+                    document.getElementById('mainModalLabel').innerHTML = "Upload Error";
+                    document.getElementsByClassName('mainmodalbody')[0].textContent = "File Size limit At: 1mb Only!";
+
+                    NotifyModal2.show();
+
+                    UploadProductPic_btn.value = "";
+                    FileName_Element.textContent = ""
+                }else{
+                    FileName_Element.textContent = "Uploaded File: " + file.name;
+                }
+            }else{
+                FileName_Element.textContent = "";
+            }
+        });
+
 
         // Custom Submit Validation
         function ValidateSubmit(event){
@@ -251,6 +372,7 @@
                 document.getElementById('MainForm').submit();
             }
         } 
+    
     </script>
 </body>
 </html>

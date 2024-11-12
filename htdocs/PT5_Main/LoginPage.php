@@ -25,6 +25,8 @@
     if (isset($_SESSION['RememberedEmail'])){
         if ($_SESSION['RememberedEmail'] != "" or $_SESSION['RememberedEmail'] != null){
             $RememberedEmailInput = $_SESSION['RememberedEmail'];
+            // Uncomment out if want to reset when user refreshes {Means if they logout can only be remembered one time when refresh it reset}
+            //unset($_SESSION['RememberedEmail']);
         }
     }
 ?>
@@ -367,13 +369,14 @@
                     }
 
                     const nonce = generateNonce();
-                    const clientId = '335141065600-1fd37eljhpn5hba011einlgukj4fb8hk.apps.googleusercontent.com';
-                    const redirectUri = 'https://fluffy-yodel-97qv5qgrwxv5hr6v-8000.app.github.dev/htdocs/PT5_Main/LoginPage.php';
+                    const clientId = '335141065600-1fd37eljhpn5hba011einlgukj4fb8hk.apps.googleusercontent.com'; // Client ID
+                    // Change the redirectUri Based on your {LoginPage.php} Web Link (Get the link when you open the {LoginPage.php} Page and replace here)
+                    const redirectUri = 'https://glorious-space-train-4jgpp47gp449h5g5-8000.app.github.dev/htdocs/PT5_Main/LoginPage.php';
                     const scope = 'openid email profile';
                     const responseType = 'id_token';
                     const prompt = 'select_account';
 
-                    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=${clientId}&scope=${scope}&response_type=${responseType}&redirect_uri=${encodeURIComponent(redirectUri)}&prompt=${prompt}&nonce=${nonce}`;
+                    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&scope=${scope}&response_type=${responseType}&redirect_uri=${encodeURIComponent(redirectUri)}&prompt=${prompt}&nonce=${nonce}`;
 
                     window.location.href = authUrl;
                 };

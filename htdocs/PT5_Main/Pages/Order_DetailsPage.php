@@ -42,30 +42,40 @@
 
     include '../mainFunctions/connection.php';
 
-    $details_Query = "SELECT 
-    o.OrderID, 
-    ca.first_name, 
-    ca.last_name,
-    ca.Address, 
-    ca.CustomerID,
-    p.Name, 
-    p.Price,
-    o.TotalPrice,
-    o.OrderStatus, 
-    od.Quant, 
-    o.OrderDate
+    $GetOrderHistoryQuery = " SELECT 
+        o.OrderID, 
+        ca.first_name, 
+        ca.last_name,
+        ca.Address, 
+        ca.CustomerID,
+        p.Name, 
+        p.Price,
+        o.TotalPrice,
+        o.OrderStatus, 
+        od.Quant, 
+        o.OrderDate,
 
-    FROM 
-    customeraccount ca
-
-    JOIN orders o ON o.CustomerID = ca.CustomerID
-    JOIN order_details od ON od.OrderID = o.OrderID
-    JOIN products p ON od.ProductID = p.ProductID
-    WHERE  o.CustomerID = ca.CustomerID
-    ORDER BY o.OrderDate DESC
+        GROUP_CONCAT(p.Name SEPARATOR ', ') AS Products,
+        GROUP_CONCAT(od.Quant SEPARATOR ', ') AS Quantities,
+        GROUP_CONCAT(p.Price SEPARATOR ', ') AS Prices,
+        SUM(od.Quant) AS TotalQuantity,
+        SUM(p.Price * od.Quant) AS TOTAL_PRICE,
+        o.TotalPrice
+    FROM
+        customeraccount ca
+    JOIN 
+        orders o ON o.CustomerID = ca.CustomerID
+    JOIN
+        order_details od ON o.OrderID = od.OrderID
+    JOIN
+        products p ON od.productID = p.productID
+    GROUP BY
+        o.OrderID, o.OrderDate
+    ORDER BY
+        o.OrderDate Desc
     ";
 
-    $Details = mysqli_query($connection, $details_Query);
+    $Details = mysqli_query($connection, $GetOrderHistoryQuery);
 ?>
 
 <!DOCTYPE html>
@@ -77,12 +87,19 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <link rel="stylesheet" href="../Css/MainDesign.css">
 
     <style>
+        .modal-content-custom {
+            background-color: #121212 !important; /* Pure black background */
+            color: #ffffff !important; /* White text */
+        }
+        
         .custom-select-sizeform{
-            width: 125px;
+            width: 122px;
             height: 34px;
 
             font-size: 13px;
@@ -126,6 +143,10 @@
 
                 <hr>
 
+                <li class = "NavigationLinks"> <i class="fas fa-eye"></i>  <a href="../clientPages/clientHomePage.php" class="text-decoration-none">View Client Page</a></li>
+
+                <hr>
+
                 <li class = "NavigationLinks"> <i class="bi-box-arrow-right"></i>  <a href="../mainFunctions/pageFunctions/Logout.php" class="text-decoration-none">Logout</a></li>
             </ul>
         </div>
@@ -144,41 +165,64 @@
     <div class="main-content" id="mainContent">
         <h5 class="Content_title">Customer Order Details</h5>
 
-        <div class="container">
+        <div class="container container-sm container-md container-lg">
             <!-- Search Bar -->
             <div class="input-group mb-3 custom-search-bar">
                 <span class="input-group-text custom-search-size"><i class="bi bi-search"></i></span>
                 <input type="text" class="form-control custom-search-size" id="myInput" type="text" placeholder="Search.." aria-label="Search">
             </div>
 
-            <div class="table-responsive-xxl overflow-auto ScrollingTable ScrollingTable-height">
+            <div class="table-responsive overflow-auto ScrollingTable ScrollingTable-height">
                 <table class="table caption-top align-middle table-hover table-dark table-bordered table-sm">
                     <thead>
                         <tr>
-                            <th>Customer Name</th>
-                            <th>Product</th>
-                            <th>Unit Price</th>
-                            <th>Quantity</th>
-                            <th>Order Date</th>
-                            <th>Total Price</th>
-                            <th>Status</th>
-                            <th>Address</th>
+                            <th>Order ID</th>
+                            <th class="col-md-1">Customer Name</th>
+                            <th class="col-md-4">Product</th>
+                            <th class="col-md-3">Unit Price</th>
+                            <th >Quantity</th>
+                            <th class="col-md-1">Order Date</th>
+                            <th class="col-md-1">Total Price</th>
+                            <th >Status</th>
+                            <th class="col-md-3">Address</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
                         <?php
                             while ($Row = mysqli_fetch_assoc($Details)){
-                            $FormattedTime = date("Y-m-d h:i A", strtotime($Row['OrderDate']))
+                            $FormattedTime = date("Y-m-d h:i A", strtotime($Row['OrderDate']));
+                            // Arrange Products
+                            $product = htmlspecialchars($Row['Products']);
+                            $quantity = htmlspecialchars($Row['Quantities']);
+                            $price = htmlspecialchars($Row['Prices']);
+                            $Products = explode(", ", $product);
+                            $Quantities = explode(", ", $quantity);
+                            $Prices = explode(", ", $price);
+
+                            $ProductDetails = [];
+                            $ProductQuantities = [];
+                            $ProductPrices = [];
+
+                            for ($i = 0; $i < count($Products); $i++){
+                                $ProductDetails[] = $Products[$i];
+                                $ProductQuantities[] = $Quantities[$i];
+                                $ProductPrices[] = $Prices[$i];
+                            }
+
+                            $ProductDetailsString = implode(", ", $ProductDetails);
+                            $QuantitiesDetailsString = implode(", ", $ProductQuantities);
+                            $PricesString = implode(", ₱", $ProductPrices)
                         ?>
 
                         <tr>
                         <input type="hidden" name="OrderID" value='<?php echo $Row['OrderID']; ?>'>
+                            <td id="OrderIdColumn"> <?php echo htmlspecialchars($Row['OrderID']);?></td>
                             <td id="CustomerNameColumn"> <?php echo htmlspecialchars($Row['last_name']) . ", " . htmlspecialchars($Row['first_name']);?></td>
-                            <td id="ProductNameColumn"> <?php echo htmlspecialchars($Row['Name']);?></td>
-                            <td id="ProductPriceColumn"> <?php echo '$' . $Row['Price'];?></td>
-                            <td id="QuantityColumn"> <?php echo $Row['Quant'];?></td>
+                            <td id="ProductNameColumn"> <?php echo $ProductDetailsString;?></td>
+                            <td id="ProductPriceColumn"> <?php echo '₱' . $PricesString;?></td>
+                            <td id="QuantityColumn"> <?php echo $QuantitiesDetailsString;?></td>
                             <td id="OrderDateColumn"> <?php echo $FormattedTime;?></td>
-                            <td id="TotalPriceColumn"> <?php echo '₱' . $Row['TotalPrice'];?></td>
+                            <td id="TotalPriceColumn"> <?php echo '₱' . htmlspecialchars($Row['TOTAL_PRICE']);?></td>
                             <td id="OrderStatusColumn">
                                 <select class="form-select SelectStatus custom-select-sizeform mySelect" name="OrderStatus" data-order-id='<?php echo $Row['OrderID']; ?>'>
                                     <option value="Pending" <?php if(htmlspecialchars($Row['OrderStatus']) == 'Pending') echo 'selected'; ?>>Pending</option>
@@ -220,11 +264,30 @@
             </div>
         </div>
     </div>
-
+    <!-- Notify Modal 2 -->
+    <div class="modal fade" id="NotifyModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mainModalLabel">Error: Trying to log in</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body mainmodalbody">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>               
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.0.0/mdb.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+
 
     <!-- Navigation Link Jscript -->
     <script type="module">        
@@ -464,7 +527,10 @@
             });
         });
 
+        var SelectedStatusOldValue;
+
         SelectStatus.forEach(element => {
+            SelectedStatusOldValue = element.value
             element.addEventListener('change', function() {
                 const selectedStatus = this.value; // Get the selected value
                 const orderId = this.getAttribute('data-order-id'); // Get the Order ID from data attribute
@@ -484,7 +550,22 @@
                     throw new Error('Network response was not ok.');
                 })
                 .then(data => {
-                    //console.log(data); // If Success this will print
+                    if (data != ""){
+                        var NotifyModal2 = new mdb.Modal(document.getElementById('NotifyModal2'));
+
+                        document.getElementById('mainModalLabel').innerHTML = "Error: Trying to Update Details!";
+                        document.getElementsByClassName('mainmodalbody')[0].innerHTML = "Not Enough Stocks" + '<br>' + "Product: " + data;
+
+                        NotifyModal2.show();
+
+                        this.value = SelectedStatusOldValue;
+
+                        SetStatusColor(this)
+                    }else{
+                        SelectedStatusOldValue = this.value;
+                    }
+
+                    console.log(data); // If Success this will print
                     this.blur();
                 })
                 .catch(error => {

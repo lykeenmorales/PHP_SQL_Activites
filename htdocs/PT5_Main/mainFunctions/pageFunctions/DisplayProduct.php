@@ -42,7 +42,7 @@
             
             echo "<td id='QuantityColumn'>";
             if ($Row['StockQuantity'] <= 0) {
-                echo '<span style="color: red;">Out of Stock</span>';
+                echo '<span style="color: red; font-weight:bold;">Out of Stock</span>';
             } else {
                 echo $Row['StockQuantity'];
             }
@@ -50,6 +50,14 @@
 
             echo "<td id='PackSizeColumn'>" . $Row['PackSize'] . "</td>";
             
+            echo "<td id='PackSizeColumn'>";  
+            if ($Row['Featured'] >= 1){
+                echo '<span style="color: #00ff04; font-weight:bold;">Yes</span>';
+            }else{
+                Echo "No";
+            }
+            echo "</td>";
+
             echo "</tr>";
         }
     }
