@@ -21,7 +21,7 @@
     unset($_SESSION['Current_ProductFilter']);
     unset($_SESSION['p_productStocksQuantity']);
 
-    $GetAllFeaturedProducts = "SELECT * FROM products WHERE Featured >= 1";
+    $GetAllFeaturedProducts = "SELECT * FROM products WHERE Featured >= 1 AND StockQuantity > 0";
 
     $Results = $connection -> query($GetAllFeaturedProducts);
 ?>
@@ -166,14 +166,17 @@
                 $(document).on('click', '#AddToCartBtn', function(event){
                     event.preventDefault();
                     var ProductID = $(this).data('productId');
-                    console.log(ProductID);
+
+                    // Create TimeZone Value for DateTime in sql data
+                    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
                     
                     $.ajax({
                         url: '../mainFunctions/pageFunctions/clientFunctions/client_AddToCart.php',
                         method: 'Post',
-                        data: {OrderedProduct: ProductID},
+                        data: {OrderedProduct: ProductID, ClientTimeZone:userTimezone},
                         success: function(response){
                             if (response){
+                                console.log(response);
                                 var response_parse = JSON.parse(response);
 
                                 if (response_parse.Status != ""){

@@ -179,14 +179,17 @@
             $(document).on('click', '#AddToCartBtn', function(event){
                 event.preventDefault();
                 var ProductID = $(this).data('productId');
-                console.log(ProductID);
+
+                // Create TimeZone Value for DateTime in sql data
+                const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
                 
                 $.ajax({
                     url: '../mainFunctions/pageFunctions/clientFunctions/client_AddToCart.php',
                     method: 'Post',
-                    data: {OrderedProduct: ProductID},
+                    data: {OrderedProduct: ProductID, ClientTimeZone:userTimezone},
                     success: function(response){
                         if (response){
+                            console.log(response);
                             var response_parse = JSON.parse(response);
 
                             if (response_parse.Status != ""){
